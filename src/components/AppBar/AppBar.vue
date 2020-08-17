@@ -1,0 +1,105 @@
+<template>
+  <v-app-bar
+    ref="bar"
+    app
+    clipped-left
+    color="primary"
+    dark
+  >
+    <v-app-bar-nav-icon @click.stop="onToggleDrawer(!drawer)" />
+    <v-toolbar-title>
+      <router-link
+        v-slot="{ navigate }"
+        :to="{ name: 'home' }"
+      >
+        <podviking-logo
+          class="logo"
+          @click="navigate"
+        />
+      </router-link>
+    </v-toolbar-title>
+    <v-spacer />
+
+    <!-- <notifications-icon /> -->
+
+    <user-icon />
+  </v-app-bar>
+</template>
+
+<script lang="ts">
+import { Vue, Component, Watch, Prop, Ref } from 'vue-property-decorator';
+import { UserService } from '../../services';
+
+// @ts-ignore - Webpack inline needs Typescript support
+import PodVikingLogo from '@/assets/images/svg/podviking_logo_flat.svg?inline';
+import { Sync } from 'vuex-pathify';
+// import NotificationsIcon from './Notifications/NotificationsIcon.vue';
+import UserIcon from './User/UserIcon.vue';
+
+@Component({
+  name: 'AppBar',
+  components: {
+    'podviking-logo': PodVikingLogo,
+    // NotificationsIcon,
+    UserIcon,
+  },
+})
+export default class AppBar extends Vue {
+  @Prop({ required: true, default: false })
+  private readonly value!: boolean;
+
+  @Ref('bar')
+  private readonly barRef!: Vue;
+
+  @Sync('layout/appBarHeight')
+  private appBarHeight!: number;
+
+  private readonly userService: UserService = UserService.getInstance();
+
+  private drawer = this.value;
+
+  private get user() {
+    return this.userService.getActive();
+  }
+
+  mounted() {
+    window.addEventListener('resize', this.onResize);
+    this.$nextTick(this.onResize);
+  }
+
+  destroyed() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  @Watch('value')
+  private onValueChange(v: boolean) {
+    this.drawer = v;
+  }
+
+  private onToggleDrawer(isOpen: boolean) {
+    this.$emit('input', isOpen);
+  }
+
+  private onResize() {
+    this.appBarHeight = this.barRef.$el.getBoundingClientRect().height;
+  }
+}
+</script>
+
+<style lang="scss">
+.logo {
+  width: 2.5rem;
+  padding-top: 0.5rem;
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+
+  path {
+    fill: white;
+  }
+
+  &:hover {
+    cursor: pointer;
+    opacity: 0.7;
+  }
+}
+</style>

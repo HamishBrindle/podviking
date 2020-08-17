@@ -1,0 +1,27 @@
+@media print {
+  body {
+    font-size: 0.75cm;
+  }
+
+  // Remove header and footer from page
+  #podviking-dashboard > div > div.fluid-layout.fill-height > header,
+  #podviking-dashboard > div > div.fluid-layout.fill-height > footer {
+    display: none;
+  }
+  // Expand main card's body to edge of screen
+  #podviking-dashboard > div > div.fluid-layout.fill-height > main > div > div > div > div {
+    width: 100%;
+    margin: 0;
+  }
+  // Padding inside the main card and all it's sub divs
+  #podviking-dashboard > div > div.fluid-layout.fill-height > main > div > div > div > div > div.order-summary__card.px-4.py-4.v-card.v-sheet.v-sheet--outlined.theme--light.elevation-0 {
+    padding: 0;
+    & > div {
+      padding: 0;
+    }
+  }
+  // Remove page title 
+  #podviking-dashboard > div > div.fluid-layout.fill-height > main > div > div > div > div > div.row {
+    display: none;
+  }
+}
