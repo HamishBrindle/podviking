@@ -3,25 +3,13 @@
     <span class="soundbar-slider__time-indicator">
       {{ startTimeMinutes }}
     </span>
-    <!-- Show dummy slider if skeleton mode -->
     <v-slider
-      v-if="skeleton"
-      class="soundbar-slider__slider"
-      :value="0"
-      :min="0"
-      :max="100"
-      disabled
-      hide-details
-    />
-    <v-slider
-      v-else
       class="soundbar-slider__slider"
       :value="currentTime"
       :min="0"
       :max="totalTime"
       track-fill-color="primary"
       hide-details
-      readonly
       @start="onStart"
       @end="onEnd"
       @mousedown="onMousedown"
@@ -35,6 +23,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import util from '@/tools/Utilities';
 
 @Component({
   name: 'SoundbarSlider',
@@ -46,20 +35,12 @@ export default class SoundbarSlider extends Vue {
   @Prop({ required: true, default: 100 })
   private readonly totalTime!: number;
 
-  /**
-   * Whether to show a dummy slider if no songs are active
-   */
-  @Prop({ required: false, default: false })
-  private readonly skeleton!: boolean;
-
   private get startTimeMinutes() {
-    const time = this.currentTime / 60000;
-    return new String(time.toFixed(2));
+    return util.msToTime(this.currentTime);
   }
 
   private get totalTimeMinutes() {
-    const time = this.totalTime / 60000;
-    return new String(time.toFixed(2));
+    return util.msToTime(this.totalTime);
   }
 
   private onStart(value: number) {
@@ -70,12 +51,12 @@ export default class SoundbarSlider extends Vue {
     this.$emit('end', value);
   }
 
-  private onMousedown() {
-    this.$emit('mousedown');
+  private onMousedown(event: MouseEvent) {
+    this.$emit('mousedown', event);
   }
 
-  private onMouseup() {
-    this.$emit('mouseup');
+  private onMouseup(event: MouseEvent) {
+    this.$emit('mouseup', event);
   }
 }
 </script>

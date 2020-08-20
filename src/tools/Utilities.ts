@@ -88,6 +88,34 @@ export class Utilities {
     }
     return false;
   }
+
+  /**
+   * Create a timestring from millismseconds
+   * @param ms
+   */
+  msToTime(milliseconds: number) {
+    /**
+     * Pad a number with specified number of places
+     * @param n Number to pad
+     * @param precision How many places to pad to. Defaults to 2.
+     */
+    function pad(n: number, precision = 2) {
+      return ('00' + n).slice(-precision);
+    }
+
+    const ms = milliseconds % 1000;
+    milliseconds = (milliseconds - ms) / 1000;
+    const secs = milliseconds % 60;
+    milliseconds = (milliseconds - secs) / 60;
+    const mins = milliseconds % 60;
+    const hrs = (milliseconds - mins) / 60;
+
+    if (hrs) {
+      return hrs + '.' + pad(mins) + '.' + pad(secs);
+    }
+
+    return mins + '.' + pad(secs);
+  }
 }
 
 export default new Utilities();

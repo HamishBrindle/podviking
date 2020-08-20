@@ -9,7 +9,9 @@ export class SoundcloudStreamer {
    * How often will the UI check for updates to the current player
    * time
    */
-  private static POLL_INTERVAL_DELAY = 60;
+  private static readonly POLL_INTERVAL_DELAY = 60;
+
+  private static readonly DEFAULT_VOLUME = 0.5;
 
   /**
    * Soundcloud client's player from stream
@@ -18,13 +20,13 @@ export class SoundcloudStreamer {
 
   private pollInterval?: any;
 
-  private pollIntervalDelay?: number;
-
   public time: number | null = null;
 
   public duration: number | null = null;
 
-  public volume: number | null = null;
+  public volume: number = SoundcloudStreamer.DEFAULT_VOLUME;
+
+  public muted = false;
 
   public buffering: boolean | null = null;
 
@@ -79,7 +81,6 @@ export class SoundcloudStreamer {
   public unset() {
     this.time = null;
     this.duration = null;
-    this.volume = null;
     this.buffering = null;
     this.playing = null;
     this.actuallyPlaying = null;
@@ -95,6 +96,7 @@ export class SoundcloudStreamer {
     try {
       await this.player?.play();
       this.setupPollInterval();
+      this.setVolume(this.volume);
       this.update();
     } catch (error) {
       Logger.error(error);
@@ -108,6 +110,7 @@ export class SoundcloudStreamer {
   public pause() {
     this.player?.pause();
     this.destroyPollInterval();
+    this.update();
   }
 
   /**
@@ -117,7 +120,7 @@ export class SoundcloudStreamer {
   public async seek(time: number) {
     try {
       if (time < 0) throw Error('Invalid time to seek to');
-      await this.player?.seek();
+      await this.player?.seek(time);
     } catch (error) {
       Logger.error(error);
       throw Error('There was an issue with your playback device. Sorry - try again!');
@@ -137,15 +140,31 @@ export class SoundcloudStreamer {
    */
   public setVolume(volume: number) {
     if (volume < 0 || volume > 1) throw Error('Volume must be within 0.0 - 1.0');
-    this.player?.setVolume();
-    this.volume = volume;
+    this.player?.setVolume(volume);
+    this.update();
   }
 
   /**
    * Returns the current volume
    */
   public getVolume() {
-    return this.player?.getVolume() ?? 0;
+    return this.player?.getVolume() ?? SoundcloudStreamer.DEFAULT_VOLUME;
+  }
+
+  public setMuted(isMuted: boolean) {
+    this.muted = isMuted;
+    if (this.muted) {
+      this.setVolume(0);
+    } else {
+      this.setVolume(this.volume);
+    }
+  }
+
+  /**
+   * Returns the current volume
+   */
+  public getMuted() {
+    return this.muted;
   }
 
   /**

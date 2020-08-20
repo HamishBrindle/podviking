@@ -47,7 +47,6 @@ export class SoundcloudService {
       const scPlayer = await this.api.stream(trackId);
       const streamer = this.getStreamer();
       if (scPlayer) streamer.setPlayer(scPlayer);
-      await streamer.play();
     } catch (error) {
       Logger.error(error);
       throw Error('There was an error while attempting to stream. Sorry - try again!');
