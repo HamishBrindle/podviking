@@ -4,7 +4,7 @@
     <slot />
     <!-- Footer -->
     <!-- Fixed Soundbar -->
-    <soundbar class="storefront-layout__soundbar" />
+    <!-- <soundbar class="storefront-layout__soundbar" /> -->
   </div>
 </template>
 
