@@ -1,7 +1,7 @@
 <template>
-  <div class="docs__wrapper">
-    <div class="docs">
-      <router-view />
+  <div class="welcome__wrapper">
+    <div class="welcome">
+      Hello, world!
     </div>
   </div>
 </template>
@@ -10,13 +10,14 @@
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'Docs',
+  name: 'Welcome',
+  components: {},
 })
-export default class Docs extends Vue {
+export default class Welcome extends Vue {
 
 }
 </script>
 
 <style lang="scss">
-// .docs {}
+// .welcome {}
 </style>

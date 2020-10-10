@@ -12,20 +12,6 @@ export interface IAuthService {
    * Login as existing user
    */
   login(args: ILoginArguments): Promise<any>;
-
-  /**
-   * Register a new user
-   */
-  register(args: IRegisterArguments): Promise<any>;
-
-  /**
-   * Confirm user registration
-   */
-  confirmation(args: IConfirmationArguments): Promise<any>;
-
-  sendPasswordResetEmail(args: ISendPasswordResetEmailArguments): Promise<any>;
-
-  resetPassword(args: IResetPasswordArugments): Promise<any>;
 }
 
 /**

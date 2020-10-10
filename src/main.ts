@@ -1,12 +1,12 @@
-import Vue from 'vue';
-import CustomVuex from '@/store';
-import router from '@/router';
-import vuetify from '@/plugins/vuetify';
-import { AuthService } from '@/services/AuthService';
 import App from '@/App.vue';
-import 'reflect-metadata';
-import '@/registerServiceWorker';
 import { Auth } from '@/models/internal';
+import vuetify from '@/plugins/vuetify';
+import '@/registerServiceWorker';
+import router from '@/router';
+import { AuthService } from '@/services/AuthService';
+import CustomVuex from '@/store';
+import 'reflect-metadata';
+import Vue from 'vue';
 import { UserService } from './services';
 
 Vue.config.productionTip = false;

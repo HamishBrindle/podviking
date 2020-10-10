@@ -1,8 +1,8 @@
-import { BaseModel } from '@/models/internal';
-import { Create, Insert, InsertOrUpdate, UpdateObject } from '@vuex-orm/core/lib/modules/payloads/Actions';
-import { Query } from '@vuex-orm/core';
 import { IApiService, IAuthService } from '@/lib/interfaces';
-import { Collections, Item, Collection } from '@/lib/types';
+import { Collection, Collections, Item } from '@/lib/types';
+import { BaseModel } from '@/models/internal';
+import { Query } from '@vuex-orm/core';
+import { Create, Insert, InsertOrUpdate, UpdateObject } from '@vuex-orm/core/lib/modules/payloads/Actions';
 import { ApiService } from './ApiService';
 
 export abstract class ModelService<T extends BaseModel> {

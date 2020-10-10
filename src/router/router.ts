@@ -1,16 +1,15 @@
-import Vue from 'vue';
-import VueRouter, { RouteConfig, Route } from 'vue-router';
-import Home from '@/views/Home.vue';
 import { UserService } from '@/services';
 import util from '@/tools/Utilities';
-import { dashboard, docs, misc } from './routes';
+import Home from '@/views/Home.vue';
+import Vue from 'vue';
+import VueRouter, { Route, RouteConfig } from 'vue-router';
+import { dashboard, misc } from './routes';
 
 Vue.use(VueRouter);
 
 const userService = UserService.getInstance();
 
 const routes: Array<RouteConfig> = [
-  // Primary Routes
   {
     path: '/',
     component: Home,
@@ -18,14 +17,14 @@ const routes: Array<RouteConfig> = [
       layout: 'storefront',
     },
   },
-
-  // Dashboard Routes
+  {
+    path: '/welcome',
+    component: () => import(/* webpackChunkName: "Welcome" */ '@/views/Welcome/Welcome.vue'),
+    meta: {
+      layout: 'storefront',
+    },
+  },
   ...dashboard,
-
-  // Documentation Routes
-  ...docs,
-
-  // Misc Routes
   ...misc,
 ];
 

@@ -11,12 +11,11 @@ export class Utilities {
    */
   public async fetchConfig(): Promise<Config> {
     if (this.config) return this.config;
-    const config: Config = await fetch(`${window.location.origin}/config.json`)
-      .then((res) => res.json());
-    if (process.env.VUE_APP_ENV !== 'production') {
-      config.order_form_endpoint.access_token = process.env.VUE_APP_ORDER_FORM_ENDPOINT ?? '';
-    }
+
+    const config: Config = await fetch(`${window.location.origin}/config.json`).then((res) => res.json());
+
     this.config = config;
+
     return this.config;
   }
 

@@ -3,16 +3,6 @@
  */
 export type Config = {
   /**
-   * Options for the OrderFormEndpoint
-   */
-  order_form_endpoint: {
-    /**
-     * Unique identifier for this deployment in Order Marshal
-     */
-    access_token: string;
-  };
-
-  /**
    * Information pertaining to this particular deployment of the
    * dashboard
    */

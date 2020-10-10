@@ -1,10 +1,9 @@
-import Vuex from 'vuex';
-import { ORMDatabase } from 'vuex-orm-decorators';
-import vuexPersist from '@/plugins/vuex-persist';
-import { VuexOrmPlugin } from '@/plugins/vuex-orm';
-import * as modules from './modules';
 import { ICustomStore } from '@/lib/interfaces';
 import pathify from '@/plugins/vuex-pathify';
+import vuexPersist from '@/plugins/vuex-persist';
+import Vuex from 'vuex';
+import { ORMDatabase } from 'vuex-orm-decorators';
+import * as modules from './modules';
 
 const isProduction = (process.env.NODE_ENV === 'production');
 
@@ -15,9 +14,7 @@ async function init() {
   const storeOptions = {
     plugins: [
       pathify.plugin,
-      ORMDatabase.install({
-        plugins: [VuexOrmPlugin],
-      }),
+      ORMDatabase.install({}),
       vuexPersist.plugin,
     ],
     strict: (!isProduction),

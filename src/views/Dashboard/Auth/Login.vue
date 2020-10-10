@@ -38,15 +38,6 @@
                     Sign up
                   </v-btn>
                 </v-col>
-
-                <!-- Help Icon -->
-                <v-col cols="auto">
-                  <popout-button
-                    :href="popoutHref"
-                    icon="mdi-help-circle-outline"
-                    tooltip="User Manual"
-                  />
-                </v-col>
               </v-row>
               <v-form
                 v-model="form.valid"
@@ -118,15 +109,11 @@ import constants from '@/constants.json';
 import { Vue, Component } from 'vue-property-decorator';
 import { AuthService } from '@/services';
 import Logger from '@/tools/Logger';
-import PopoutButton from '@/views/Dashboard/Docs/components/PopoutButton.vue';
 
 @Component({
-  name: 'LoginForm',
-  components: {
-    PopoutButton,
-  },
+  name: 'Login',
 })
-export default class LoginForm extends Vue {
+export default class Login extends Vue {
   /**
    * Application Name
    */

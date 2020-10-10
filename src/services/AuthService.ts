@@ -1,13 +1,8 @@
-import { Create, UpdateObject, Insert, InsertOrUpdate } from '@vuex-orm/core/lib/modules/payloads/Actions';
-import { Collection, Query, Collections } from '@vuex-orm/core';
-import { IAuthService } from '@/lib/interfaces';
-import { Item } from '@/lib/types';
+import { AppAbility, Item } from '@/lib/types';
+import { ability, Auth, User } from '@/models/internal';
 import { ModelService } from '@/services';
-import { Auth } from '@/models/internal';
-import { User } from '@/models/internal';
-import util from '@/tools/Utilities';
-import { AppAbility } from '@/lib/types';
-import { defineAbility } from '@/models/internal';
+import { Collection, Collections, Query } from '@vuex-orm/core';
+import { Create, Insert, InsertOrUpdate, UpdateObject } from '@vuex-orm/core/lib/modules/payloads/Actions';
 
 export class AuthService extends ModelService<Auth> {
   /**
@@ -17,7 +12,7 @@ export class AuthService extends ModelService<Auth> {
 
   protected model = Auth;
 
-  protected path = '/order_form_users';
+  protected path = '/auth';
 
   /**
    * Cached instance of the service
@@ -49,10 +44,10 @@ export class AuthService extends ModelService<Auth> {
    */
   public defineAbility(auth: Auth): AppAbility {
     if (!this.ability) {
-      this.ability = defineAbility(auth);
+      this.ability = ability(auth);
       return this.ability;
     }
-    const { rules } = defineAbility(auth);
+    const { rules } = ability(auth);
     this.ability.update(rules);
     return this.ability;
   }
@@ -140,8 +135,6 @@ export class AuthService extends ModelService<Auth> {
 
     const user = User.query().whereId('123').with('auth').first();
 
-    console.log('user :>> ', user);
-
     return this.setActiveUser(user);
   }
 
@@ -155,108 +148,15 @@ export class AuthService extends ModelService<Auth> {
     this.setActive(null);
   }
 
-  /**
-   * Register a new User to the API
-   */
-  public async register(
-    email: string,
-    name: string,
-    password: string,
-    passwordConfirmation: string,
-  ): Promise<boolean> {
-    const config = await util.fetchConfig();
-    const { access_token } = config.order_form_endpoint;
-    const credentials = {
-      access_token,
-      order_form_user: {
-        email: email,
-        name: name,
-        password: password,
-        password_confirmation: passwordConfirmation,
-      },
-    };
-    await this.api.register(credentials);
-    return true;
-  }
-
-  /**
-   * Confirms user registration then login on success
-   * @param confirmationToken confirmation token
-   */
-  public async confirmRegistrationThenlogin(confirmationToken: string): Promise<Item<User>> {
-    const userData = await this.api.confirmation({
-      confirmation_token: confirmationToken,
-    });
-    return this.setActiveUser(userData);
-  }
-
-  /**
-   * Sends a password reset email containing a link to reset the User's password
-   */
-  public async sendPasswordResetEmail(email: string): Promise<boolean> {
-    const config = await util.fetchConfig();
-    const { access_token } = config.order_form_endpoint;
-    await this.api.sendPasswordResetEmail({
-      access_token,
-      email,
-    });
-    return true;
-  }
-
-  /**
-   * Resets the User's password using a password reset token
-   * (via link from password reset email)
-   * @param resetPasswordToken reset password token
-   */
-  public async resetPassword(
-    resetPasswordToken: string,
-    password: string,
-    passwordConfirmation: string,
-  ): Promise<boolean> {
-    const credentials = {
-      reset_password_token: resetPasswordToken,
-      password,
-      password_confirmation: passwordConfirmation,
-    };
-    await this.api.resetPassword(credentials);
-    return true;
-  }
-
-  public get api(): IAuthService {
+  public get api() {
     return {
       /**
        * Sign in with an existing user's credentials
        */
-      login: async (args) => {
+      login: async (args: any) => {
         const { data: { order_form_user}} =  await this.apiService.post(`${this.path}/sign_in`, args);
         return this.getAuthorizedUserData(order_form_user);
       },
-
-      /**
-       * Register a new User with the API and recieve a token for
-       * confirming an email
-       */
-      register: async (args) => this.apiService.post(this.path, args),
-
-      /**
-       * Sends confirmation token back to the server in exchange for
-       * a User data object and authentication token
-       */
-      confirmation: async (args) => {
-        const { data: { order_form_user}} = await this.apiService.get(`${this.path}/confirmation`, args);
-        return this.getAuthorizedUserData(order_form_user);
-      },
-
-      /**
-       * Sends a password reset email containing a link to reset the User's password
-       */
-      sendPasswordResetEmail: async (args) => this.apiService.post(`${this.path}/password`, args),
-
-      /**
-       * Resets the User's password using a password reset token
-       * (via link from password reset email)
-       */
-      resetPassword: async (args) => this.apiService.patch(`${this.path}/password`, args),
     };
   }
 

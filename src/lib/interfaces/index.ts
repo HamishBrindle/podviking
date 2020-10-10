@@ -9,4 +9,3 @@ export * from './RequestArguments.interface';
 export * from './RootState.interface';
 export * from './TableView.interface';
 export * from './Alert.interface';
-export * from './Commentable.interface';
