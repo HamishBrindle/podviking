@@ -25,7 +25,6 @@ import { Vue, Component, Watch } from 'vue-property-decorator';
 import { Get, Sync } from 'vuex-pathify';
 import constants from '@/constants.json';
 import DashboardLayout from '@/layouts/DashboardLayout.vue';
-import FluidLayout from '@/layouts/FluidLayout.vue';
 import FullScreenLayout from '@/layouts/FullScreenLayout.vue';
 import StorefrontLayout from '@/layouts/StorefrontLayout.vue';
 
@@ -33,7 +32,6 @@ import StorefrontLayout from '@/layouts/StorefrontLayout.vue';
   name: 'App',
   components: {
     DashboardLayout,
-    FluidLayout,
     FullScreenLayout,
     StorefrontLayout,
   },
