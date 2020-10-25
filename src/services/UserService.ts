@@ -11,7 +11,7 @@ import { AuthService } from './AuthService';
 export class UserService extends ModelService<User> {
   protected model = User;
 
-  protected path = '/order_form_users';
+  protected path = '/users';
 
   /**
    * Cached instance of the service
