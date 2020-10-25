@@ -86,71 +86,59 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { User } from '@/models/internal';
-import { Item, InstanceOf } from '@/lib/types';
-import { BaseModel } from '@/models/internal';
+import { BaseModel } from '@/models/BaseModel';
 
 @Component({
   name: 'TableRowActions',
 })
-export default class TableRowActions extends Vue {
+export default class TableRowActions<T extends BaseModel> extends Vue {
   /**
    * A record as a data table row
    */
   @Prop({ required: true })
-  readonly record!: BaseModel;
+  private readonly record!: BaseModel;
 
   /**
    * Callback for when `edit` button is clicked
    */
   @Prop({ default: false })
-  readonly view!: ((record: InstanceOf<BaseModel>) => Promise<any>) | false;
+  private readonly view!: ((record: T) => Promise<any>) | false;
 
   /**
    * Callback for when `edit` button is clicked
    */
   @Prop({ default: false })
-  readonly edit!: ((record: InstanceOf<BaseModel>) => Promise<any>) | false;
+  private readonly edit!: ((record: T) => Promise<any>) | false;
 
   /**
    * Callback for when `approve` button is clicked
    */
   @Prop({ default: false })
-  readonly approve!: ((record: InstanceOf<BaseModel>) => Promise<any>) | false;
+  private readonly approve!: ((record: T) => Promise<any>) | false;
 
   /**
    * Callback for when `deny` button is clicked
    */
   @Prop({ default: false })
-  readonly deny!: ((record: InstanceOf<BaseModel>) => Promise<any>) | false;
+  private readonly deny!: ((record: T) => Promise<any>) | false;
 
   /**
    * Callback to check for view permission on the model instance
    */
   @Prop({ required: true })
-  readonly canRead!: () => boolean;
+  private readonly canRead!: () => boolean;
 
   /**
    * Callback to check for edit permission on the model instance
    */
   @Prop({ required: true })
-  readonly canUpdate!: (record: InstanceOf<BaseModel>) => boolean;
+  private readonly canUpdate!: (record: T) => boolean;
 
   /**
    * Callback to check for approval permission on the model instance
    */
   @Prop({ required: true })
-  readonly canUpdateStatus!: (record: InstanceOf<BaseModel>) => boolean;
-
-  /**
-   * Active User
-   */
-  private user: Item<User> = User.getActive();
-
-  /**
-   * Model type used in list
-   */
-  private recordType = this.record.constructor.name;
+  private readonly canUpdateStatus!: (record: T) => boolean;
 }
 </script>
 

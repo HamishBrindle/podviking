@@ -1,5 +1,6 @@
 <template>
   <v-row
+    class="logout"
     align="center"
     justify="center"
   >
@@ -20,12 +21,17 @@
             </v-list-item>
             <v-divider />
             <v-card-text>
-              <div>You've successfully logged out. <span class="font-weight-bold">Great work today</span>, we'll see you again soon!</div>
+              <div>
+                You've successfully logged out.
+                <span class="font-weight-bold">
+                  &nbsp;Great work today
+                </span>, we'll see you again soon!
+              </div>
             </v-card-text>
             <v-card-actions>
               <v-spacer />
               <router-link
-                v-slot="{ href, route, navigate }"
+                v-slot="{ href, navigate }"
                 :to="{ name: 'login' }"
               >
                 <v-btn
@@ -47,12 +53,24 @@
   </v-row>
 </template>
 
-<script>
-import { AuthService } from '@/services';
+<script lang="ts">
+import { AuthService } from '@/services/AuthService';
+import { Vue, Component } from 'vue-property-decorator';
 
-export default {
-  beforeCreate() {
-    AuthService.getInstance().logout();
-  },
-};
+@Component({
+  name: 'Logout',
+})
+export class Logout extends Vue {
+  private readonly authService = AuthService.getInstance();
+
+  private beforeCreate() {
+    this.authService.logout();
+  }
+}
+
+export default Logout;
 </script>
+
+<style lang="scss">
+// .logout {}
+</style>

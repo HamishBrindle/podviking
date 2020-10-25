@@ -1,5 +1,11 @@
 import { Store } from 'vuex';
-import { IRootState } from '.';
+
+/**
+ * Interface for the CustomStore's root-state
+ */
+interface IRootState {
+  version: string;
+}
 
 /**
  * Interface for our App's root state

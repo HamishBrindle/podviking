@@ -1,12 +1,12 @@
-import { IApiService, IAuthService } from '@/lib/interfaces';
-import { Collection, Collections, Item } from '@/lib/types';
-import { BaseModel } from '@/models/internal';
-import { Query } from '@vuex-orm/core';
-import { Create, Insert, InsertOrUpdate, UpdateObject } from '@vuex-orm/core/lib/modules/payloads/Actions';
+import { BaseModel } from '@/models/BaseModel';
+import { Query, Item } from '@vuex-orm/core';
+import {
+  Create, Insert, InsertOrUpdate, UpdateObject,
+} from '@vuex-orm/core/lib/modules/payloads/Actions';
+import { Collection, Collections } from '@vuex-orm/core/lib';
 import { ApiService } from './ApiService';
 
 export abstract class ModelService<T extends BaseModel> {
-
   /**
    * Model that this service deals with
    */
@@ -77,7 +77,7 @@ export abstract class ModelService<T extends BaseModel> {
   /**
    * Model's API wrapper
    */
-  public abstract get api(): IApiService | IAuthService;
+  public abstract get api(): Record<string | symbol, (...args: any[]) => Promise<any>>;
 }
 
 export default ModelService;

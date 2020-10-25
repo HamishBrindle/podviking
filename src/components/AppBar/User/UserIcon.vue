@@ -68,9 +68,9 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { UserService } from '@/services';
-import User from '@/models/User';
-import util from '@/tools/Utilities';
+import { UserService } from '@/services/UserService';
+import { User } from '@/models/User';
+import { Utilities } from '@/tools/Utilities';
 
 const exampleItems = [
   {
@@ -104,8 +104,8 @@ export default class UserIcon extends Vue {
     const roles = this.user?.roles;
     if (!roles) throw Error('No roles available for this User');
     return (roles.length > 1)
-      ? this.user?.roles.map((role) => util.titleCase(role)).join(', ')
-      : util.titleCase(roles[0]);
+      ? this.user?.roles.map((role) => Utilities.titleCase(role)).join(', ')
+      : Utilities.titleCase(roles[0]);
   }
 
   /**
@@ -113,20 +113,20 @@ export default class UserIcon extends Vue {
    */
   private onMenuOptionClick(option: string) {
     switch (option) {
-    case 'user-settings': {
-      const currentRoute = this.$route.name;
-      if (currentRoute !== 'settings') {
-        this.$router.push({ name: 'settings' });
+      case 'user-settings': {
+        const currentRoute = this.$route.name;
+        if (currentRoute !== 'settings') {
+          this.$router.push({ name: 'settings' });
+        }
+        break;
       }
-      break;
-    }
-    case 'user-logout': {
-      this.$router.push({ name: 'logout' });
-      break;
-    }
-    default: {
-      break;
-    }
+      case 'user-logout': {
+        this.$router.push({ name: 'logout' });
+        break;
+      }
+      default: {
+        break;
+      }
     }
   }
 }

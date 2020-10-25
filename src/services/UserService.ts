@@ -1,12 +1,14 @@
-import { ModelService, AuthService } from '.';
-import { Create, UpdateObject, Insert, InsertOrUpdate } from '@vuex-orm/core/lib/modules/payloads/Actions';
-import { Collection, Query, Collections } from '@vuex-orm/core';
-import { Item } from '@/lib/types';
-import { User } from '@/models/internal';
-import { IApiService } from '@/lib/interfaces';
+import {
+  Create, UpdateObject, Insert, InsertOrUpdate,
+} from '@vuex-orm/core/lib/modules/payloads/Actions';
+import {
+  Collection, Query, Collections, Item,
+} from '@vuex-orm/core';
+import { User } from '@/models/User';
+import { ModelService } from './ModelService';
+import { AuthService } from './AuthService';
 
 export class UserService extends ModelService<User> {
-
   protected model = User;
 
   protected path = '/order_form_users';
@@ -15,13 +17,6 @@ export class UserService extends ModelService<User> {
    * Cached instance of the service
    */
   private static instance: UserService | null = null;
-
-  /**
-   * Constructor
-   */
-  private constructor() {
-    super();
-  }
 
   private readonly authService: AuthService = AuthService.getInstance();
 
@@ -71,12 +66,16 @@ export class UserService extends ModelService<User> {
   /**
    * Get the active User
    */
-  public getActive(): Item<User> {
-    return this.model
+  public getActive(): User {
+    const activeUser = this.model
       .query()
       .with('auth')
       .whereId(User.active)
       .first();
+
+    if (!activeUser) throw Error('Cannot retrieve the active User - this may be a problem with state.');
+
+    return activeUser;
   }
 
   /**
@@ -87,7 +86,7 @@ export class UserService extends ModelService<User> {
     if (!activeUser) {
       throw Error('Unable to get an authentication token. No current User found');
     }
-    return activeUser?.authentication_token;
+    return activeUser?.authenticationToken;
   }
 
   /**
@@ -108,12 +107,12 @@ export class UserService extends ModelService<User> {
       .first();
   }
 
-  public get api(): IApiService {
+  public get api() {
     return {
       /**
        * Find a list of Users on the server via GET request
        */
-      find: async (args) => this.apiService.get(this.path, args),
+      find: async (args: any) => this.apiService.get(this.path, args),
 
       /**
        * Create a Customer on the server via POST request
@@ -145,3 +144,5 @@ export class UserService extends ModelService<User> {
     };
   }
 }
+
+export default UserService;

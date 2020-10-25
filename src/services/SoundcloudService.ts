@@ -1,5 +1,5 @@
 import { SoundcloudStreamer } from '@/lib/SoundcloudStreamer';
-import Logger from '@/tools/Logger';
+import { Logger } from '@/tools/Logger';
 import SoundCloud from 'soundcloud';
 
 /**
@@ -15,6 +15,11 @@ export class SoundcloudService {
    * Soundcloud client
    */
   private streamer = new SoundcloudStreamer();
+
+  /**
+   * Logger
+   */
+  private readonly logger: Logger = new Logger({ context: 'SoundcloudService' });
 
   /**
    * Cached instance of the service
@@ -36,7 +41,7 @@ export class SoundcloudService {
   /**
    * Initialize SoundCloud client with client ID, etc.
    */
-  private initialize () {
+  private initialize() {
     this.client.initialize({
       client_id: process.env.VUE_APP_SOUNDCLOUD_CLIENT_ID,
     });
@@ -48,7 +53,7 @@ export class SoundcloudService {
       const streamer = this.getStreamer();
       if (scPlayer) streamer.setPlayer(scPlayer);
     } catch (error) {
-      Logger.error(error);
+      this.logger.error(error);
       throw Error('There was an error while attempting to stream. Sorry - try again!');
     }
   }
@@ -76,3 +81,5 @@ export class SoundcloudService {
     this.getStreamer().setPlayer(player);
   }
 }
+
+export default SoundcloudService;

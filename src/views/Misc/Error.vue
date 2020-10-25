@@ -78,4 +78,3 @@ export default class Error extends Vue {
   }
 }
 </style>
-

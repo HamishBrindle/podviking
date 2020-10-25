@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const webpack = require('webpack');
 const path = require('path');
 const S3Plugin = require('webpack-s3-plugin');
 const shell = require('shelljs');
+const marked = require('marked');
 const CreateFileWebpack = require('./build/CreateFileWebpack');
 const s3Config = require('./build/s3.config');
 const constants = require('./src/constants.json');
-const marked = require('marked');
 
 const deploy = (process.env.AWS_S3_DEPLOY !== undefined);
 
@@ -80,6 +79,12 @@ module.exports = {
   configureWebpack: {
     plugins,
     devtool: 'source-map',
+    resolve: {
+      extensions: ['.js', '.vue', '.ts', '.json'],
+      alias: {
+        '@': `${__dirname}/src`,
+      },
+    },
   },
   transpileDependencies: [
     'vuetify',

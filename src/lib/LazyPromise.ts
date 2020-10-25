@@ -16,7 +16,8 @@ export class LazyPromise<T = any> extends Promise<T> {
    * manually
    */
   constructor(executor: Executor<T> = () => {}) {
-    let res, rej;
+    let res; let
+      rej;
 
     super((resolve, reject) => {
       res = resolve;
@@ -55,3 +56,5 @@ export class LazyPromise<T = any> extends Promise<T> {
    */
   public reject: (reason?: any) => void;
 }
+
+export default LazyPromise;

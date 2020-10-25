@@ -4,42 +4,43 @@ module.exports = {
     node: true,
   },
   extends: [
-    'plugin:vue/recommended',
-    'eslint:recommended',
+    // 'eslint:recommended',
     '@vue/typescript/recommended',
+    'plugin:vue/recommended',
+    '@vue/airbnb',
   ],
-  parserOptions: {
-    ecmaVersion: 2020,
-    parser: '@typescript-eslint/parser',
+  globals: {
+    _: 'readonly',
   },
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
+  },
+  plugins: [
+    'vue',
+  ],
   rules: {
     // TypeScript
+    '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/camelcase': ['off'],
-    '@typescript-eslint/ban-ts-ignore': ['off'],
-    '@typescript-eslint/no-explicit-any': ['off'],
-    '@typescript-eslint/no-var-requires': ['off'],
-    '@typescript-eslint/interface-name-prefix': ['error', {
-      prefixWithI: 'always',
+
+    // Override for optional-chaining in TS
+    'no-unused-expressions': 'off',
+    '@typescript-eslint/no-unused-expressions': 'error',
+
+    // AirBnB Config overrides
+    'import/extensions': ['error', 'ignorePackages', {
+      js: 'never',
+      jsx: 'never',
+      ts: 'never',
+      tsx: 'never'
     }],
-
-    // Vue
-    'vue/no-v-html': 'off',
-
-    // General
-    'lines-between-class-members': ['error', 'always'],
-    'keyword-spacing': ['error', { 'before': true }],
-    'semi': ['error', 'always'],
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'camelcase': 'off',
-    'comma-dangle': ['error', 'always-multiline'],
-    'class-methods-use-this': 'off',
-    'import/extensions': 'off',
-    'import/no-named-as-default': 'off',
-    'max-len': 'off', // TODO: Put this shit back on you lazy ass fucks
-    'no-trailing-spaces': 'error',
-    'quotes': ['error', 'single'],
-    'indent': ['error', 2],
   },
   overrides: [
     {
@@ -52,7 +53,15 @@ module.exports = {
       },
     },
   ],
-  globals: {
-    _: 'readonly',
-  }
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src'],
+        ],
+        extensions: ['.js', '.vue', '.ts', '.json'],
+      },
+      webpack: {}, // Listen for webpack settings.
+    },
+  },
 };

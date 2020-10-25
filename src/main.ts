@@ -1,38 +1,41 @@
-import App from '@/App.vue';
-import { Auth } from '@/models/internal';
-import vuetify from '@/plugins/vuetify';
 import '@/registerServiceWorker';
-import router from '@/router';
-import { AuthService } from '@/services/AuthService';
-import CustomVuex from '@/store';
 import 'reflect-metadata';
-import Vue from 'vue';
-import { UserService } from './services';
+import { AuthService } from '@/services/AuthService';
+import AppComponent from '@/App.vue';
+import ErrorComponent from '@/views/Error.vue';
+import CustomVuex from '@/store';
+import router from '@/router';
+import Vue, { Component } from 'vue';
+import vuetify from '@/plugins/vuetify';
+import { Logger } from '@/tools/Logger';
 
 Vue.config.productionTip = false;
 
+const logger = new Logger({ context: 'ApplicationBoostrap' });
 const authService = AuthService.getInstance();
-const userService = UserService.getInstance();
 
 async function start() {
+  let entryComponent: Component = AppComponent;
+  let store;
+
   try {
     Vue.use(CustomVuex);
 
-    const store = await CustomVuex.init();
-    const user = userService.getActive();
-    const auth = (user?.auth) ? user.auth : new Auth();
+    store = await CustomVuex.init();
 
-    Vue.prototype.$ability = authService.defineAbility(auth);
-
-    new Vue({
-      router,
-      store,
-      vuetify,
-      render: (h) => h(App),
-    }).$mount('#app');
+    Vue.prototype.$ability = authService.defineAbility();
   } catch (error) {
-    console.error('Unable to start application:', error);
+    logger.error(error);
+
+    entryComponent = ErrorComponent;
   }
+
+  new Vue({
+    router,
+    store,
+    vuetify,
+    render: (h) => h(entryComponent),
+  }).$mount('#app');
 }
 
 start();

@@ -1,5 +1,8 @@
-import { AttrField, OrmModel, PrimaryKey, HasOneField } from 'vuex-orm-decorators';
-import { BaseModel, Auth } from '@/models/internal';
+import {
+  AttrField, OrmModel, PrimaryKey, HasOneField,
+} from 'vuex-orm-decorators';
+import { Auth } from '@/models/Auth';
+import { BaseModel } from '@/models/BaseModel';
 
 @OrmModel('users')
 export class User extends BaseModel {
@@ -33,13 +36,13 @@ export class User extends BaseModel {
    * Date this User was created on the server.
    */
   @AttrField()
-  public created_at!: string;
+  public createdAt!: string;
 
   /**
    * Date this User was updated on the server.
    */
   @AttrField()
-  public updated_at!: string;
+  public updatedAt!: string;
 
   /**
    * User's avatar
@@ -57,7 +60,7 @@ export class User extends BaseModel {
    * List of distribution channels the User is associated with
    */
   @AttrField([])
-  public dist_channels!: Array<string>;
+  public distChannels!: Array<string>;
 
   /**
    * Auth association
@@ -67,12 +70,12 @@ export class User extends BaseModel {
 
   /**
    * Gets associated Auth object, if not already attached
-   * to this instance, and returns it's `authentication_token`
+   * to this instance, and returns it's `authenticationToken`
    * field.
    */
-  public get authentication_token() {
-    if (this.auth?.authentication_token) {
-      return this.auth.authentication_token;
+  public get authenticationToken() {
+    if (this.auth?.authenticationToken) {
+      return this.auth.authenticationToken;
     }
     const user = User
       .query()
@@ -80,7 +83,7 @@ export class User extends BaseModel {
       .whereId(this.id)
       .first();
     this.auth = user?.auth;
-    return user?.auth?.authentication_token ?? '';
+    return user?.auth?.authenticationToken ?? '';
   }
 
   /**

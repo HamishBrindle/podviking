@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable func-names */
 const path = require('path');
 const write = require('write');
 

@@ -1,4 +1,11 @@
-import Logger from '@/tools/Logger';
+import { Logger } from '@/tools/Logger';
+
+/**
+ * SoundcloudPlayer type
+ */
+export type SoundcloudPlayer = {
+  [method: string]: (...args: any[]) => any;
+}
 
 /**
  * SoundcloudPlayer is a wrapper around the Player returned
@@ -12,6 +19,8 @@ export class SoundcloudStreamer {
   private static readonly POLL_INTERVAL_DELAY = 60;
 
   private static readonly DEFAULT_VOLUME = 0.5;
+
+  private readonly logger: Logger = new Logger({ context: 'SoundcloudStreamer' })
 
   /**
    * Soundcloud client's player from stream
@@ -90,7 +99,8 @@ export class SoundcloudStreamer {
   }
 
   /**
-   * Starts to play the sound. Returns a Promise that resolves when playback starts, and may reject if the browser refuses playback.
+   * Starts to play the sound. Returns a Promise that resolves when playback starts,
+   * and may reject if the browser refuses playback.
    */
   public async play() {
     try {
@@ -99,7 +109,7 @@ export class SoundcloudStreamer {
       this.setVolume(this.volume);
       this.update();
     } catch (error) {
-      Logger.error(error);
+      this.logger.error(error);
       throw Error('There was an issue while attempting to start playback. Sorry - try again!');
     }
   }
@@ -114,7 +124,8 @@ export class SoundcloudStreamer {
   }
 
   /**
-   * Seeks to the position in the song (in milliseconds). Returns a Promise that resolves when the seek completes, or may reject if the seek is not possible.
+   * Seeks to the position in the song (in milliseconds). Returns a Promise that resolves
+   * when the seek completes, or may reject if the seek is not possible.
    * @param time
    */
   public async seek(time: number) {
@@ -122,7 +133,7 @@ export class SoundcloudStreamer {
       if (time < 0) throw Error('Invalid time to seek to');
       await this.player?.seek(time);
     } catch (error) {
-      Logger.error(error);
+      this.logger.error(error);
       throw Error('There was an issue with your playback device. Sorry - try again!');
     }
   }
@@ -182,7 +193,8 @@ export class SoundcloudStreamer {
   }
 
   /**
-   * Returns true whilst the intended state is to be playing. This flips with play() and pause() calls.
+   * Returns true whilst the intended state is to be playing. This flips with
+   * play() and pause() calls.
    */
   public isPlaying() {
     return this.player?.isPlaying() ?? false;
@@ -221,7 +233,7 @@ export class SoundcloudStreamer {
    * do not need it anymore.
    */
   public kill() {
-    this.player?.kill();
+    if (this.player) this.player.kill();
     this.player = undefined;
     this.destroyPollInterval();
     this.unset();
@@ -235,11 +247,4 @@ export class SoundcloudStreamer {
   public on(event: string, handler: any) {
     return this.player?.on(event, handler);
   }
-}
-
-/**
- * SoundcloudPlayer type
- */
-export type SoundcloudPlayer = {
-  [method: string]: (...args: any[]) => any;
 }

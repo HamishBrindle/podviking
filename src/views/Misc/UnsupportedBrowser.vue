@@ -43,15 +43,13 @@ import { Vue, Component } from 'vue-property-decorator';
   name: 'UnsupportedBrowser',
 })
 export default class UnsupportedBrowser extends Vue {
-
   private readonly supportedBrowsers = [
-    { icon: 'mdi-google-chrome', name: 'Google Chrome'},
-    { icon: 'mdi-firefox', name: 'Mozilla Firefox'},
-    { icon: 'mdi-microsoft-edge', name: 'Microsoft Edge'},
-    { icon: 'mdi-apple-safari', name: 'Safari'},
-    { icon: 'mdi-opera', name: 'Opera'},
+    { icon: 'mdi-google-chrome', name: 'Google Chrome' },
+    { icon: 'mdi-firefox', name: 'Mozilla Firefox' },
+    { icon: 'mdi-microsoft-edge', name: 'Microsoft Edge' },
+    { icon: 'mdi-apple-safari', name: 'Safari' },
+    { icon: 'mdi-opera', name: 'Opera' },
   ]
 }
 
 </script>
-
