@@ -20,13 +20,10 @@ async function start() {
 
   try {
     Vue.use(CustomVuex);
-
-    store = await CustomVuex.init();
-
     Vue.prototype.$ability = authService.defineAbility();
+    store = await CustomVuex.init();
   } catch (error) {
     logger.error(error);
-
     entryComponent = ErrorComponent;
   }
 
