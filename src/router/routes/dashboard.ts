@@ -22,11 +22,11 @@ const config: Array<RouteConfig> = [{
   children: [
     {
       path: '',
-      redirect: 'login',
+      redirect: 'dashboard-login',
     },
     {
       path: 'home',
-      name: 'home',
+      name: 'dashboard-home',
       component: DashboardHome,
       beforeEnter: (to, from, next) => {
         if (can('read', 'Report')) {
@@ -36,31 +36,33 @@ const config: Array<RouteConfig> = [{
       },
       meta: {
         requiresAuth: true,
+        layout: 'dashboard',
       },
     },
     {
       path: 'settings',
-      name: 'settings',
+      name: 'dashboard-settings',
       component: () => import(/* webpackChunkName: "Settings" */ '@/views/Dashboard/Settings.vue'),
       meta: {
         requiresAuth: true,
+        layout: 'dashboard',
       },
     },
     {
       path: 'login',
-      name: 'login',
+      name: 'dashboard-login',
+      component: Login,
       meta: {
         layout: 'full-screen',
       },
-      component: Login,
     },
     {
       path: 'logout',
-      name: 'logout',
+      name: 'dashboard-logout',
+      component: () => import(/* webpackChunkName: "Auth" */ '@/views/Dashboard/Auth/Logout.vue'),
       meta: {
         layout: 'full-screen',
       },
-      component: () => import(/* webpackChunkName: "Auth" */ '@/views/Dashboard/Auth/Logout.vue'),
     },
   ],
 }];

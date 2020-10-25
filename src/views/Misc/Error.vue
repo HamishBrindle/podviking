@@ -27,8 +27,8 @@
             <v-card-actions>
               <div class="error-page__cta">
                 <router-link
-                  v-slot="{ href, route, navigate }"
-                  :to="{ name: 'home' }"
+                  v-slot="{ href, navigate }"
+                  :to="{ name: 'dashboard-home' }"
                 >
                   <v-btn
                     color="primary"

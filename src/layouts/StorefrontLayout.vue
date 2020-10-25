@@ -1,6 +1,7 @@
 <template>
   <div class="storefront-layout">
     <!-- Navigation -->
+    <navbar />
 
     <!-- Main -->
     <v-main>
@@ -24,11 +25,13 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { Sync } from 'vuex-pathify';
-import Soundbar from '@/components/Storefront/Sound/Soundbar/Soundbar.vue';
+import { Soundbar } from '@/components/Storefront/Sound/Soundbar/Soundbar.vue';
+import { Navbar } from '@/components/Storefront/Navigation/Navbar/Navbar.vue';
 
 @Component({
   name: 'StorefrontLayout',
   components: {
+    Navbar,
     Soundbar,
   },
 })

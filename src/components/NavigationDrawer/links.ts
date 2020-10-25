@@ -14,12 +14,12 @@ const links: NavigationLink[] = [
   {
     title: 'Home',
     action: 'mdi-home',
-    to: { name: 'home' },
+    to: { name: 'dashboard-home' },
   },
   {
     title: 'Settings',
     action: 'mdi-cog',
-    to: { name: 'settings' },
+    to: { name: 'dashboard-settings' },
     divider: true,
   },
 ];

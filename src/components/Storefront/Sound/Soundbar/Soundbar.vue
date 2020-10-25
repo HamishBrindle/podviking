@@ -72,7 +72,7 @@ import SoundbarVolume from './components/SoundbarVolume.vue';
     SoundbarVolume,
   },
 })
-export default class Soundbar extends Vue {
+export class Soundbar extends Vue {
   private readonly soundcloudService = SoundcloudService.getInstance();
 
   private readonly logger: Logger = new Logger({ context: 'Soundbar' });
@@ -167,6 +167,8 @@ export default class Soundbar extends Vue {
     this.streamer.setMuted(isMuted);
   }
 }
+
+export default Soundbar;
 </script>
 
 <style lang="scss">

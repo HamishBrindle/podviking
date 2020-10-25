@@ -58,7 +58,7 @@ export default class App extends Vue {
   }
 
   get layout() {
-    const which = this.$route.meta.layout || 'main';
+    const which = this.$route.meta.layout || 'storefront';
     return `${which}-layout`;
   }
 

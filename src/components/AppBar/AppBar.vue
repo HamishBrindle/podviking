@@ -10,7 +10,7 @@
     <v-toolbar-title>
       <router-link
         v-slot="{ navigate }"
-        :to="{ name: 'home' }"
+        :to="{ name: 'dashboard-home' }"
       >
         <podviking-logo
           class="logo"

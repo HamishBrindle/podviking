@@ -12,17 +12,33 @@ const userService = UserService.getInstance();
 const routes: Array<RouteConfig> = [
   {
     path: '/',
+    name: 'home',
     component: Home,
-    meta: {
-      layout: 'storefront',
-    },
   },
   {
     path: '/welcome',
+    name: 'welcome',
     component: () => import(/* webpackChunkName: "Welcome" */ '@/views/Welcome/Welcome.vue'),
-    meta: {
-      layout: 'storefront',
-    },
+  },
+  {
+    path: '/shop',
+    name: 'shop',
+    component: () => import(/* webpackChunkName: "Shop" */ '@/views/Shop/Shop.vue'),
+  },
+  {
+    path: '/about',
+    name: 'about',
+    component: () => import(/* webpackChunkName: "About" */ '@/views/About/About.vue'),
+  },
+  {
+    path: '/contact',
+    name: 'contact',
+    component: () => import(/* webpackChunkName: "Contact" */ '@/views/Contact/Contact.vue'),
+  },
+  {
+    path: '/licensing',
+    name: 'licensing',
+    component: () => import(/* webpackChunkName: "Licensing" */ '@/views/Licensing/Licensing.vue'),
   },
   ...dashboard,
   ...misc,
