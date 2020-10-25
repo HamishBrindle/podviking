@@ -25,7 +25,6 @@
           @mouseup="onSliderMouseup"
         />
 
-
         <!-- Volume & Mute -->
         <soundbar-volume
           class="soundbar__volume"
@@ -50,15 +49,14 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable @typescript-eslint/camelcase */
-
 import { Vue, Component } from 'vue-property-decorator';
 import { SoundcloudService } from '@/services/SoundcloudService';
+import { SoundcloudStreamer } from '@/lib/SoundcloudStreamer';
+import { Logger } from '@/tools/Logger';
 import SoundbarControls from './components/SoundbarControls.vue';
 import SoundbarSlider from './components/SoundbarSlider.vue';
 import SoundbarInfo from './components/SoundbarInfo.vue';
 import SoundbarVolume from './components/SoundbarVolume.vue';
-import { SoundcloudStreamer } from '@/lib/SoundcloudStreamer';
 
 @Component({
   name: 'Soundbar',
@@ -73,6 +71,18 @@ export default class Soundbar extends Vue {
   private readonly soundcloudService = SoundcloudService.getInstance();
 
   private streamer: SoundcloudStreamer = Vue.observable(this.soundcloudService.getStreamer());
+
+  private readonly logger: Logger = new Logger({ context: 'Soundbar' });
+
+  /**
+   * TODO: Remove when real deal comes in
+   */
+  private readonly song = {
+    track: '279764235',
+    artist: 'Young & Shameless',
+    title: 'White Ferrari (Remix)',
+    img: '',
+  }
 
   private get isPlaying() {
     return this.streamer.playing;
@@ -94,18 +104,6 @@ export default class Soundbar extends Vue {
     return this.streamer.muted;
   }
 
-  /**
-   * TODO: Remove when real deal comes in
-   */
-  private get song() {
-    return {
-      track: '279764235',
-      artist: 'Young & Shameless',
-      title: 'White Ferrari (Remix)',
-      img: '',
-    };
-  }
-
   mounted() {
     this.soundcloudService.stream(this.song.track);
   }
@@ -119,11 +117,11 @@ export default class Soundbar extends Vue {
   }
 
   private onControlsPrev() {
-    console.log('onControlsPrev');
+    this.logger.info(`${this.$options.name}: onControlsPrev`);
   }
 
   private onControlsNext() {
-    console.log('onControlsNext');
+    this.logger.info(`${this.$options.name}: onControlsNext`);
   }
 
   private onSliderStart() {
@@ -134,12 +132,12 @@ export default class Soundbar extends Vue {
     this.streamer.seek(value).then(() => this.streamer.play());
   }
 
-  private onSliderMousedown(event: MouseEvent) {
-    console.log('onSliderMousedown', event);
+  private onSliderMousedown(/* event: MouseEvent */) {
+    this.logger.info(`${this.$options.name}: onSliderMousedown`);
   }
 
-  private onSliderMouseup(event: MouseEvent) {
-    console.log('onSliderMouseup', event);
+  private onSliderMouseup(/* event: MouseEvent */) {
+    this.logger.info(`${this.$options.name}: onSliderMouseup`);
   }
 
   private onVolumeAdjust(volume: number) {

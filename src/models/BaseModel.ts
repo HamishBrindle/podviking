@@ -1,5 +1,4 @@
-import { Model } from '@vuex-orm/core';
-import { Item, InstanceOf } from '@/lib/types';
+import { Model, InstanceOf } from '@vuex-orm/core';
 
 export class BaseModel extends Model {
   /**
@@ -92,7 +91,10 @@ export class BaseModel extends Model {
   /**
    * Get the active record of this Model
    */
-  static getActive<T extends typeof BaseModel>(this: T, includes: Array<string> = []): Item<InstanceOf<T>> {
+  static getActive<T extends typeof BaseModel>(
+    this: T,
+    includes: Array<string> = [],
+  ): InstanceOf<T> | null {
     const query = this.query().whereId(this.active);
 
     if (Array.isArray(includes)) {
@@ -117,7 +119,7 @@ export class BaseModel extends Model {
   static setActive<T extends typeof BaseModel>(
     this: T,
     record: (InstanceOf<T> | string | number | null),
-  ): Item<InstanceOf<T>> {
+  ): InstanceOf<T> | null {
     if (!record) {
       this.active = '';
       return null;

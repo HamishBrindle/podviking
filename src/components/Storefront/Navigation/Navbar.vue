@@ -1,7 +1,7 @@
 <template>
   <div class="navbar__wrapper">
     <div class="navbar">
-      &nbsp;
+      NAVBAR
     </div>
   </div>
 </template>
@@ -19,5 +19,7 @@ export default class Navbar extends Vue {
 </script>
 
 <style lang="scss">
-// .navbar {}
+.navbar {
+  width: 100%;
+}
 </style>

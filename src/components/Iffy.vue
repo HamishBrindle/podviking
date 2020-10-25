@@ -1,6 +1,6 @@
 <script lang="ts">
 import { Vue, Prop, Component } from 'vue-property-decorator';
-import { VNode, RenderContext } from 'vue';
+import { VNode, RenderContext, CreateElement } from 'vue';
 
 /**
  * The Iffy component serves as a conditional wrapper where,
@@ -27,16 +27,19 @@ export class Iffy extends Vue {
   /**
    * Render function
    */
-  render(h: Function, context: RenderContext) {
+  // eslint-disable-next-line class-methods-use-this
+  render(h: CreateElement, context: RenderContext) {
     const { children, props } = context;
 
     if (props.show) {
       return children;
-    } else {
-      return children
-        .map((child: VNode) => child.children ?? child.componentOptions?.children ?? null)
-        .filter(Boolean);
     }
+
+    return children
+      .map((child: VNode) => child.children ?? child.componentOptions?.children ?? null)
+      .filter(Boolean);
   }
 }
+
+export default Iffy;
 </script>

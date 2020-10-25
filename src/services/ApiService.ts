@@ -1,7 +1,7 @@
 import URL from 'url-parse';
 import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { IRequestArguments } from '@/lib/interfaces';
-import Logger from '@/tools/Logger';
+import { Logger } from '@/tools/Logger';
 
 /**
  * Service to house logic for sending requests to the API
@@ -18,6 +18,11 @@ export class ApiService {
   private static instance: ApiService | null = null;
 
   /**
+   * Logger
+   */
+  private readonly logger: Logger = new Logger({ context: 'ApiService' });
+
+  /**
    * Base URL for requests to the API
    */
   public readonly endpoint: URL;
@@ -26,15 +31,17 @@ export class ApiService {
    * Get the singleton instance of this class
    */
   public static getInstance(endpoint?: string) {
-    endpoint = endpoint ?? process.env.VUE_APP_API_ENDPOINT;
+    const apiEndpoint = endpoint ?? process.env.VUE_APP_API_ENDPOINT;
 
-    if (!endpoint) {
-      throw Error('Unable to initialize instance of `ApiService` without endpoint. \
-      Provide a parameter or ensure your environment variables are set correctly');
+    if (!apiEndpoint) {
+      throw Error(
+        'Unable to initialize instance of `ApiService` without endpoint. '
+        + 'Provide a parameter or ensure your environment variables are set correctly',
+      );
     }
 
     if (!this.instance) {
-      this.instance = new ApiService(endpoint);
+      this.instance = new ApiService(apiEndpoint);
       return this.instance;
     }
     return this.instance;
@@ -66,17 +73,17 @@ export class ApiService {
    * @throws {Error}
    * @returns {object} Response body
    */
-  async post<T = any>(path: string, params: IRequestArguments, options?: AxiosRequestConfig) {
-    if (!options) options = {};
+  async post<T = any>(path: string, params: IRequestArguments, axiosConfig?: AxiosRequestConfig) {
+    const options = axiosConfig ?? {};
     const config: AxiosRequestConfig = {
       responseType: 'json',
       ...options,
       method: 'POST',
       url: path,
     };
-    Logger.request({ ...config, params });
+    this.logger.request({ ...config, params });
     const response = await this.client.post<T>(path, params, config);
-    Logger.response(response);
+    this.logger.response(response);
     return response;
   }
 
@@ -86,8 +93,8 @@ export class ApiService {
    * @param path
    * @param params
    */
-  async get<T = any>(path: string, params: IRequestArguments, options?: AxiosRequestConfig) {
-    if (!options) options = {};
+  async get<T = any>(path: string, params: IRequestArguments, axiosConfig?: AxiosRequestConfig) {
+    const options = axiosConfig ?? {};
     const config: AxiosRequestConfig = {
       params,
       responseType: 'json',
@@ -95,9 +102,9 @@ export class ApiService {
       method: 'GET',
       url: path,
     };
-    Logger.request(config);
+    this.logger.request(config);
     const response = await this.client.get<T>(path, config);
-    Logger.response(response);
+    this.logger.response(response);
     return response;
   }
 
@@ -109,19 +116,19 @@ export class ApiService {
    * @param path
    * @param params
    */
-  async put<T = any>(path: string, params: IRequestArguments, options?: AxiosRequestConfig) {
-    Logger.warn('ApiService: Use of the `PUT` protocol is deprecated - use `PATCH` instead.');
+  async put<T = any>(path: string, params: IRequestArguments, axiosConfig?: AxiosRequestConfig) {
+    this.logger.warn('ApiService: Use of the `PUT` protocol is deprecated - use `PATCH` instead.');
 
-    if (!options) options = {};
+    const options = axiosConfig ?? {};
     const config: AxiosRequestConfig = {
       responseType: 'json',
       ...options,
       method: 'PUT',
       url: path,
     };
-    Logger.request({ ...config, params });
+    this.logger.request({ ...config, params });
     const response = await this.client.put<T>(path, params, config);
-    Logger.response(response);
+    this.logger.response(response);
     return response;
   }
 
@@ -131,17 +138,17 @@ export class ApiService {
    * @param path
    * @param params
    */
-  async patch<T = any>(path: string, params: IRequestArguments, options?: AxiosRequestConfig) {
-    if (!options) options = {};
+  async patch<T = any>(path: string, params: IRequestArguments, axiosConfig?: AxiosRequestConfig) {
+    const options = axiosConfig ?? {};
     const config: AxiosRequestConfig = {
       responseType: 'json',
       ...options,
       method: 'PATCH',
       url: path,
     };
-    Logger.request({ ...config, params });
+    this.logger.request({ ...config, params });
     const response = await this.client.patch<T>(path, params, config);
-    Logger.response(response);
+    this.logger.response(response);
     return response;
   }
 
@@ -151,8 +158,8 @@ export class ApiService {
    * @param path
    * @param params
    */
-  async delete<T = any>(path: string, params: IRequestArguments, options?: AxiosRequestConfig) {
-    if (!options) options = {};
+  async delete<T = any>(path: string, params: IRequestArguments, axiosConfig?: AxiosRequestConfig) {
+    const options = axiosConfig ?? {};
     const config: AxiosRequestConfig = {
       params,
       responseType: 'json',
@@ -160,9 +167,11 @@ export class ApiService {
       method: 'DELETE',
       url: path,
     };
-    Logger.request(config);
+    this.logger.request(config);
     const response = await this.client.delete<T>(path, config);
-    Logger.response(response);
+    this.logger.response(response);
     return response;
   }
 }
+
+export default ApiService;

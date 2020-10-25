@@ -1,5 +1,5 @@
-import { AppAbility } from '@/lib/types';
-import { Auth } from '@/models/internal';
+import { AbilityMap } from '@/lib/types';
+import { User } from '@/models/User';
 import { defineAbility as caslDefineAbility } from '@casl/ability';
 
 /**
@@ -7,9 +7,11 @@ import { defineAbility as caslDefineAbility } from '@casl/ability';
  * object
  * @param auth
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export default function ability(auth: Auth) {
-  return caslDefineAbility<AppAbility>((can) => {
-    can('manage', 'all');
+export default function ability() {
+  return caslDefineAbility<AbilityMap>((can) => {
+    can('create', User);
+    can('read', User);
+    can('update', User);
+    can('destroy', User);
   });
 }

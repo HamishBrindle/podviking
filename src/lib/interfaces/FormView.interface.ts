@@ -1,5 +1,5 @@
 import { Form } from '@/models/forms/Form';
-import { BaseModel } from '@/models/internal';
+import { BaseModel } from '@/models/BaseModel';
 
 export interface IFormView<T extends BaseModel> {
   /**

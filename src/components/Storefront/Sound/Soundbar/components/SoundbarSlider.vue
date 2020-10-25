@@ -23,7 +23,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import util from '@/tools/Utilities';
+import { Utilities } from '@/tools/Utilities';
 
 @Component({
   name: 'SoundbarSlider',
@@ -36,11 +36,11 @@ export default class SoundbarSlider extends Vue {
   private readonly totalTime!: number;
 
   private get startTimeMinutes() {
-    return util.msToTime(this.currentTime);
+    return Utilities.msToTime(this.currentTime);
   }
 
   private get totalTimeMinutes() {
-    return util.msToTime(this.totalTime);
+    return Utilities.msToTime(this.totalTime);
   }
 
   private onStart(value: number) {

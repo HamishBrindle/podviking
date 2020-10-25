@@ -9,7 +9,7 @@ export interface IRequestArguments {
  * Interface for create arguments going to the API
  */
 export interface ICreateArguments extends IRequestArguments {
-  authentication_token: string;
+  authenticationToken: string;
 }
 
 /**
@@ -17,7 +17,7 @@ export interface ICreateArguments extends IRequestArguments {
  */
 export interface IUpdateArguments extends IRequestArguments {
   id: string | number;
-  authentication_token: string;
+  authenticationToken: string;
 }
 
 /**
@@ -25,14 +25,14 @@ export interface IUpdateArguments extends IRequestArguments {
  */
 export interface IFindOneArguments extends IRequestArguments {
   id: string | number;
-  authentication_token: string;
+  authenticationToken: string;
 }
 
 /**
  * Interface for find arguments going to the API
  */
 export interface IFindArguments extends IRequestArguments {
-  authentication_token: string;
+  authenticationToken: string;
 }
 
 /**
@@ -40,7 +40,5 @@ export interface IFindArguments extends IRequestArguments {
  */
 export interface IDestroyArguments extends IRequestArguments {
   id: string | number;
-  authentication_token: string;
+  authenticationToken: string;
 }
-
-export default IRequestArguments;

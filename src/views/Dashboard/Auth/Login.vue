@@ -107,8 +107,8 @@
 <script lang="ts">
 import constants from '@/constants.json';
 import { Vue, Component } from 'vue-property-decorator';
-import { AuthService } from '@/services';
-import Logger from '@/tools/Logger';
+import { AuthService } from '@/services/AuthService';
+import { Logger } from '@/tools/Logger';
 
 @Component({
   name: 'Login',
@@ -138,6 +138,8 @@ export default class Login extends Vue {
    * Resolved router link to open in popout
    */
   private popoutHref = '';
+
+  private readonly logger: Logger = new Logger({ context: 'Login' });
 
   /**
    * User Service for handling login requests and auth storage
@@ -199,10 +201,10 @@ export default class Login extends Vue {
     this.isLoggingIn = true;
 
     try {
-      await this.authService.login(this.form.email /*this.form.password*/);
+      await this.authService.login(this.form.email /* this.form.password */);
       this.$router.push({ name: 'orders-list' });
     } catch (error) {
-      Logger.error(error);
+      this.logger.error(error);
       this.error = error.message;
       this.isSnackbarVisible = true;
       setTimeout(() => {

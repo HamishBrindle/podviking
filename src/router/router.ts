@@ -1,5 +1,5 @@
-import { UserService } from '@/services';
-import util from '@/tools/Utilities';
+import { UserService } from '@/services/UserService';
+import { Utilities } from '@/tools/Utilities';
 import Home from '@/views/Home.vue';
 import Vue from 'vue';
 import VueRouter, { Route, RouteConfig } from 'vue-router';
@@ -40,7 +40,7 @@ const router = new VueRouter({
  * @returns {boolean}
  */
 function isAuthenticated(): boolean {
-  return !!userService.getActive()?.authentication_token;
+  return !!userService.getActive()?.authenticationToken;
 }
 
 /**
@@ -51,7 +51,7 @@ function isAuthenticationRequired(route: Route): boolean {
 }
 
 router.beforeEach((to, from, next) => {
-  if (util.isUsingIEBrowser() && to.name !== 'unsupported-browser') {
+  if (Utilities.isUsingIEBrowser() && to.name !== 'unsupported-browser') {
     return next({
       name: 'unsupported-browser',
     });

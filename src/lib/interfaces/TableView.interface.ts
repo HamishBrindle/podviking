@@ -1,4 +1,4 @@
-import { BaseModel } from '@/models/internal';
+import { BaseModel } from '@/models/BaseModel';
 import { DataTableHeader } from 'vuetify';
 
 export interface ITableView<T extends BaseModel> {

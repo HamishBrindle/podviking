@@ -1,4 +1,4 @@
-import { BaseModel } from '@/models/internal';
+import { BaseModel } from '@/models/BaseModel';
 
 export interface ICollectionView<T extends BaseModel> {
   /**

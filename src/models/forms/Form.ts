@@ -1,6 +1,6 @@
-import BaseModel from '../BaseModel';
 import { FormBaseSchema } from '@/lib/types/FormBaseSchema.type';
 import _ from 'lodash';
+import { BaseModel } from '../BaseModel';
 
 export abstract class Form<T extends BaseModel> {
   /**
@@ -82,3 +82,5 @@ export abstract class Form<T extends BaseModel> {
     };
   }
 }
+
+export default Form;

@@ -1,30 +1,36 @@
-import { AppAbility, Item } from '@/lib/types';
-import { ability, Auth, User } from '@/models/internal';
-import { ModelService } from '@/services';
-import { Collection, Collections, Query } from '@vuex-orm/core';
-import { Create, Insert, InsertOrUpdate, UpdateObject } from '@vuex-orm/core/lib/modules/payloads/Actions';
+import {
+  Collection, Collections, Item, Query,
+} from '@vuex-orm/core';
+import {
+  Create, Insert, InsertOrUpdate, UpdateObject,
+} from '@vuex-orm/core/lib/modules/payloads/Actions';
+import { AbilityMap } from '@/lib/types';
+import { AppAbility } from '@/lib/AppAbility';
+import { Auth } from '@/models/Auth';
+import { ModelService } from '@/services/ModelService';
+import { User } from '@/models/User';
+import ability from '@/models/functions/ability';
 
 export class AuthService extends ModelService<Auth> {
   /**
    * App abilities
    */
-  private ability: AppAbility = new AppAbility();
+  private ability: AbilityMap = new AppAbility();
 
+  /**
+   * Model to be serviced
+   */
   protected model = Auth;
 
+  /**
+   * API path
+   */
   protected path = '/auth';
 
   /**
    * Cached instance of the service
    */
   private static instance: AuthService | null = null;
-
-  /**
-   * Constructor
-   */
-  private constructor() {
-    super();
-  }
 
   /**
    * Get an instance of the UserService
@@ -42,12 +48,12 @@ export class AuthService extends ModelService<Auth> {
    * throughout the application.
    * @param user
    */
-  public defineAbility(auth: Auth): AppAbility {
+  public defineAbility(): AbilityMap {
     if (!this.ability) {
-      this.ability = ability(auth);
+      this.ability = ability();
       return this.ability;
     }
-    const { rules } = ability(auth);
+    const { rules } = ability();
     this.ability.update(rules);
     return this.ability;
   }
@@ -101,7 +107,7 @@ export class AuthService extends ModelService<Auth> {
   /**
    * Get app abilities object
    */
-  public getAbility(): AppAbility {
+  public getAbility(): AbilityMap {
     return this.ability;
   }
 
@@ -109,18 +115,18 @@ export class AuthService extends ModelService<Auth> {
    * Set app abilities object
    * @param value
    */
-  public setAbility(value: AppAbility) {
+  public setAbility(value: AbilityMap) {
     this.ability = value;
   }
 
   /**
    * Login as a User to the API and recieve user/auth data
    */
-  public async login(email: string /*password: string*/): Promise<Item<User>> {
+  public async login(email: string /* password: string */): Promise<Item<User>> {
     await User.create({
       data: {
         id: '123',
-        email: email,
+        email,
         name: 'Young & Shameless',
         created_at: new Date().toUTCString(),
         updated_at: new Date().toUTCString(),
@@ -128,14 +134,14 @@ export class AuthService extends ModelService<Auth> {
         roles: ['ADMIN'],
         auth: {
           user_id: '123',
-          authentication_token: 'abc123',
+          authenticationToken: 'abc123',
         },
       },
     });
 
     const user = User.query().whereId('123').with('auth').first();
 
-    return this.setActiveUser(user);
+    return this.setActiveUser(user as any);
   }
 
   /**
@@ -154,8 +160,8 @@ export class AuthService extends ModelService<Auth> {
        * Sign in with an existing user's credentials
        */
       login: async (args: any) => {
-        const { data: { order_form_user}} =  await this.apiService.post(`${this.path}/sign_in`, args);
-        return this.getAuthorizedUserData(order_form_user);
+        const { data } = await this.apiService.post(`${this.path}/sign_in`, args);
+        return AuthService.getAuthorizedUserData(data);
       },
     };
   }
@@ -164,21 +170,7 @@ export class AuthService extends ModelService<Auth> {
    * Returns User with valid Auth
    * @param user user data
    */
-  private getAuthorizedUserData(user: any): User {
-    // Create Auth data object from response
-    const auth = {
-      authentication_token: user.authentication_token,
-      user_id: user.id,
-      permissions: user.permissions ?? {},
-    };
-
-    // We don't need these fields on the User anymore
-    delete user.authentication_token;
-    delete user.permissions;
-
-    // Nest the Auth object inside the User and let the ORM take
-    // care of creating the association(s)
-    user.auth = auth;
+  private static getAuthorizedUserData(user: User): User {
     return user;
   }
 
@@ -186,21 +178,22 @@ export class AuthService extends ModelService<Auth> {
    * Creates User and sets active User/Auth
    * @param userData authorized user data
    */
-  private async setActiveUser(userData: any): Promise<User> {
+  private async setActiveUser(userData: Record<string, any>): Promise<User> {
     const user = new User(userData);
-
-    if (!user?.auth?.authentication_token) {
-      throw Error('Uh-oh! An unexpected problem occured, please try again later');
-    }
 
     await User.insert({ data: user });
 
     User.active = user.id;
-    Auth.active = user.auth.authentication_token;
+    Auth.active = user.auth;
 
-    this.defineAbility(user.auth);
+    if (!user.auth) {
+      throw Error('Invalid (or undefined) Auth object associated with User');
+    }
+
+    this.defineAbility();
 
     return user;
   }
 }
 
+export default AuthService;
