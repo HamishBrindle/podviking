@@ -49,9 +49,12 @@ export class SoundcloudService {
 
   public async stream(trackId: string | number): Promise<void> {
     try {
-      const scPlayer = await this.api.stream(trackId);
       const streamer = this.getStreamer();
-      if (scPlayer) streamer.setPlayer(scPlayer);
+
+      const scPlayer = await this.api.stream(trackId);
+      if (!scPlayer) throw Error('There was a problem streaming track from Soundcloud');
+
+      streamer.setPlayer(scPlayer);
     } catch (error) {
       this.logger.error(error);
       throw Error('There was an error while attempting to stream. Sorry - try again!');

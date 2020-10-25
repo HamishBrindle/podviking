@@ -1,49 +1,54 @@
 <template>
   <div class="soundbar__wrapper">
     <div class="soundbar">
-      <div class="soundbar__container">
-        <!--  Controls -->
-        <soundbar-controls
-          class="soundbar__controls"
-          :playing="isPlaying"
-          @prev="onControlsPrev"
-          @play="onControlsPlay"
-          @pause="onControlsPause"
-          @next="onControlsNext"
-        />
+      <v-slide-y-reverse-transition>
+        <div
+          v-if="!loading && isPlaying"
+          class="soundbar__container"
+        >
+          <!--  Controls -->
+          <soundbar-controls
+            class="soundbar__controls"
+            :playing="isPlaying"
+            @prev="onControlsPrev"
+            @play="onControlsPlay"
+            @pause="onControlsPause"
+            @next="onControlsNext"
+          />
 
-        <!-- Time slider -->
-        <!-- Time indicators (current and total time) -->
-        <soundbar-slider
-          class="soundbar__slider"
-          :current-time="currentTime"
-          :total-time="totalTime"
-          :skeleton="!isPlaying"
-          @start="onSliderStart"
-          @end="onSliderEnd"
-          @mousedown="onSliderMousedown"
-          @mouseup="onSliderMouseup"
-        />
+          <!-- Time slider -->
+          <!-- Time indicators (current and total time) -->
+          <soundbar-slider
+            class="soundbar__slider"
+            :current-time="currentTime"
+            :total-time="totalTime"
+            :skeleton="!isPlaying"
+            @start="onSliderStart"
+            @end="onSliderEnd"
+            @mousedown="onSliderMousedown"
+            @mouseup="onSliderMouseup"
+          />
 
-        <!-- Volume & Mute -->
-        <soundbar-volume
-          class="soundbar__volume"
-          :volume="volume"
-          :mute="isMuted"
-          @adjust="onVolumeAdjust"
-          @mute="onVolumeMute"
-        />
+          <!-- Volume & Mute -->
+          <soundbar-volume
+            class="soundbar__volume"
+            :volume="volume"
+            :mute="isMuted"
+            @adjust="onVolumeAdjust"
+            @mute="onVolumeMute"
+          />
 
-        <!-- Track image, title, artist -->
-        <soundbar-info
-          class="soundbar__info"
-          :artist="song.artist"
-          :title="song.title"
-          :img="song.img"
-        />
+          <!-- Track image, title, artist -->
+          <soundbar-info
+            class="soundbar__info"
+            :artist="song.artist"
+            :title="song.title"
+            :img="song.img"
+          />
 
-        <!-- Add to cart button -->
-      </div>
+          <!-- Add to cart button -->
+        </div>
+      </v-slide-y-reverse-transition>
     </div>
   </div>
 </template>
@@ -70,9 +75,11 @@ import SoundbarVolume from './components/SoundbarVolume.vue';
 export default class Soundbar extends Vue {
   private readonly soundcloudService = SoundcloudService.getInstance();
 
+  private readonly logger: Logger = new Logger({ context: 'Soundbar' });
+
   private streamer: SoundcloudStreamer = Vue.observable(this.soundcloudService.getStreamer());
 
-  private readonly logger: Logger = new Logger({ context: 'Soundbar' });
+  private loading = false;
 
   /**
    * TODO: Remove when real deal comes in
@@ -104,8 +111,20 @@ export default class Soundbar extends Vue {
     return this.streamer.muted;
   }
 
-  mounted() {
-    this.soundcloudService.stream(this.song.track);
+  created() {
+    this.init();
+  }
+
+  async init() {
+    this.loading = true;
+
+    try {
+      await this.soundcloudService.stream(this.song.track);
+    } catch (t) {
+      this.logger.error(t);
+    }
+
+    this.loading = false;
   }
 
   private onControlsPlay() {
@@ -155,13 +174,13 @@ export default class Soundbar extends Vue {
   width: 100%;
   height: 2vw;
   min-height: 3.125rem;
-  background: #e3e3e3;
 
   &__container {
     height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #e3e3e3;
   }
 
   &__controls {

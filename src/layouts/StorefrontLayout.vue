@@ -1,10 +1,23 @@
 <template>
   <div class="storefront-layout">
     <!-- Navigation -->
-    <slot />
+
+    <!-- Main -->
+    <v-main>
+      <v-container class="main-layout__body">
+        <transition
+          name="fade"
+          mode="out-in"
+        >
+          <slot />
+        </transition>
+      </v-container>
+    </v-main>
+
     <!-- Footer -->
+
     <!-- Fixed Soundbar -->
-    <!-- <soundbar class="storefront-layout__soundbar" /> -->
+    <soundbar class="storefront-layout__soundbar" />
   </div>
 </template>
 
