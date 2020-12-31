@@ -16,6 +16,7 @@
     </v-main>
 
     <!-- Footer -->
+    <footerbar />
 
     <!-- Fixed Soundbar -->
     <soundbar class="storefront-layout__soundbar" />
@@ -27,12 +28,14 @@ import { Vue, Component } from 'vue-property-decorator';
 import { Sync } from 'vuex-pathify';
 import { Soundbar } from '@/components/Storefront/Sound/Soundbar/Soundbar.vue';
 import { Navbar } from '@/components/Storefront/Navigation/Navbar/Navbar.vue';
+import { Footerbar } from '@/components/Storefront/Navigation/Footerbar.vue';
 
 @Component({
   name: 'StorefrontLayout',
   components: {
     Navbar,
     Soundbar,
+    Footerbar,
   },
 })
 export default class StorefrontLayout extends Vue {
