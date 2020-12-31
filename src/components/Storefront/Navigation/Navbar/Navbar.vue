@@ -98,6 +98,8 @@ export class Navbar extends Vue {
   private readonly brandTypefaceUrl!: string;
 
   /**
+   * TODO: Implement
+   *
    * Page is scrolled to top
    */
   private isTop = false;
