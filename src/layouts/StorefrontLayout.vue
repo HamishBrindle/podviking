@@ -5,7 +5,10 @@
 
     <!-- Main -->
     <v-main>
-      <v-container class="main-layout__body">
+      <v-container
+        class="main-layout__body"
+        fluid
+      >
         <transition
           name="fade"
           mode="out-in"
