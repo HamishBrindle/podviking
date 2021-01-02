@@ -42,20 +42,20 @@ module.exports = {
     svgRule.uses.clear();
     svgRule
       .oneOf('inline')
-      .resourceQuery(/inline/)
-      .use('babel-loader')
-      .loader('babel-loader')
-      .end()
-      .use('vue-svg-loader')
-      .loader('vue-svg-loader')
-      .end()
-      .end()
+        .resourceQuery(/inline/)
+        .use('babel-loader')
+          .loader('babel-loader')
+          .end()
+        .use('vue-svg-loader')
+          .loader('vue-svg-loader')
+          .end()
+        .end()
       .oneOf('external')
-      .use('file-loader')
-      .loader('file-loader');
+        .use('file-loader')
+          .loader('file-loader');
 
-    config
-      .plugin('html')
+    const htmlPlugin = config.plugin('html');
+    htmlPlugin
       .tap((args) => {
         let title = constants.appName;
         if (process.env.VUE_APP_ENV !== 'production') {
@@ -66,17 +66,18 @@ module.exports = {
         return args;
       });
 
-    config.module.rule('md')
-      .test(/\.md/)
-      .use('html-loader')
-      .loader('html-loader')
-      .end()
-      .use('markdown-loader')
-      .loader('markdown-loader')
-      .options({ renderer: new marked.Renderer() });
     // Note: In the future, we can use option `baseUrl` and pull in
     // docs specific to a deployment so all links in the markdown
     // are relative to it
+    const mdRule = config.module.rule('md');
+    mdRule
+      .test(/\.md/)
+      .use('html-loader')
+        .loader('html-loader')
+        .end()
+      .use('markdown-loader')
+        .loader('markdown-loader')
+        .options({ renderer: new marked.Renderer() });
   },
   configureWebpack: {
     plugins,
