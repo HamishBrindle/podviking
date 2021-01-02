@@ -273,13 +273,14 @@ export default Footerbar;
       font-size: 1.87vw !important;
       line-height: 2.20vw !important;
     }
+    .newsletter__submit > .v-btn__content { font-size: 0.9vw }
   }
   &__site-nav {
     grid-area: site-nav;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    max-height: 9.7vw;
+    max-height: 9.8vw;
 
     // Column Spacing
     & > div { margin: 0 0.88vw; }
@@ -287,6 +288,7 @@ export default Footerbar;
     .site-nav__section {
       display: flex;
       flex-direction: column;
+      font-size: 0.9vw;
 
       // Section header
       & > p {
@@ -327,7 +329,7 @@ export default Footerbar;
     & > span {
       margin-right: 0.88vw;
     }
-
+    .stamp__info { font-size: 0.9vw }
     .stamp__providers > * { margin: 0 0.3vw }
   }
 }
