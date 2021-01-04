@@ -6,7 +6,6 @@ const marked = require('marked');
 const CreateFileWebpack = require('./build/CreateFileWebpack');
 const s3Config = require('./build/s3.config');
 const constants = require('./src/constants.json');
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 
 const deploy = (process.env.AWS_S3_DEPLOY !== undefined);
 
@@ -23,7 +22,6 @@ const plugins = [
   new webpack.ProvidePlugin({
     _: 'lodash',
   }),
-  new VuetifyLoaderPlugin(),
 ];
 
 if (deploy) {

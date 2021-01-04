@@ -1,7 +1,7 @@
 <template>
   <div class="home__wrapper">
     <div class="home">
-      Hello
+      Home
     </div>
   </div>
 </template>

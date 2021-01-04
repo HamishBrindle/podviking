@@ -26,6 +26,7 @@
             >
               <v-img
                 :src="brandTypefaceUrl"
+                width="15vw"
                 @click="navigate"
               />
             </v-btn>
@@ -117,7 +118,7 @@ export default Navbar;
 @import '~vuetify/src/styles/styles.sass';
 
 .navbar {
-  $item-spacing: 0.25rem;
+  $item-spacing: 0.25vw;
 
   width: 100%;
   display: flex;
@@ -125,7 +126,7 @@ export default Navbar;
   align-items: center;
 
   &__wrapper {
-    padding: 2vw;
+    padding: 1vw;
   }
 
   &__brand-typeface {
@@ -141,7 +142,7 @@ export default Navbar;
 
   &__links {
     display: flex;
-    padding: 0.5rem 1rem;
+    padding: 0.5vh 1vh;
 
     &--solid {
       background: var(--v-primary-base);
@@ -156,11 +157,25 @@ export default Navbar;
     }
   }
 
-  &__controls > .v-btn {
-    border-radius: 0;
+  &__controls {
+    display: flex;
 
     &:not(:last-child) {
       margin-right: $item-spacing;
+    }
+
+    & > .v-btn.v-btn--fab.v-btn--flat.v-btn--round.v-btn--text.v-size--large.primary--text {
+      border-radius: 0;
+      display: flex;
+      min-width: unset;
+      width: unset;
+      height: unset;
+      padding: 1vw 1vw;
+    }
+
+    & > .v-btn.v-btn--fab.v-btn--flat.v-btn--round.v-btn--text.v-size--large.primary--text
+      > span > i {
+      font-size: 2vw !important;
     }
   }
 }

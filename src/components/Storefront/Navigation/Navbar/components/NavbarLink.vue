@@ -21,6 +21,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Location } from 'vue-router';
 
 @Component({
   name: 'NavbarLink',
@@ -31,7 +32,7 @@ export class NavbarLink extends Vue {
   private readonly label!: string;
 
   @Prop({ required: true, default: null })
-  private readonly to!: Record<string, any>;
+  private readonly to!: Location;
 }
 
 export default NavbarLink;
@@ -40,7 +41,17 @@ export default NavbarLink;
 <style lang="scss">
 .navbar-link {
   &__btn {
+    height: 100%;
     border-radius: 0;
+  }
+  &__btn > span {
+    font-size: 1vw;
+  }
+  .navbar-link__btn.v-btn.v-btn--flat.v-btn--text.v-size--default {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    padding: 0.5vw 1vw;
   }
 }
 </style>
