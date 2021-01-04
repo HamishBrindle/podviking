@@ -37,17 +37,36 @@
           <div class="secondary" />
         </div>
 
-        <v-slide-group show-arrows>
+        <v-slide-group
+          show-arrows="desktop"
+          active-class="song--active"
+          center-active
+          mandatory
+        >
+          <template slot="prev">
+            <v-icon
+              size="2vw"
+              class="font-size-vw"
+            >
+              mdi-chevron-left
+            </v-icon>
+          </template>
+          <template slot="next">
+            <v-icon
+              size="2vw"
+              class="font-size-vw"
+            >
+              mdi-chevron-right
+            </v-icon>
+          </template>
           <v-slide-item
             v-for="n in 15"
             :key="n"
             v-slot="{ active, toggle }"
           >
             <v-card
-              :color="active ? 'primary' : 'grey lighten-1'"
-              class="ma-4"
-              height="20vw"
-              width="15vw"
+              color="grey lighten-2"
+              class="song"
               @click="toggle"
             >
               <v-row
@@ -192,5 +211,21 @@ export default SongSlider;
   &__go-to-store > .v-btn > span {
     font-size: 1.1vw;
   }
+}
+
+.song {
+  height: 20vw;
+  width: 15vw;
+  margin: 1vw;
+  transform: scale(1);
+  transition: transform 150ms ease-out !important;
+
+  &--active {
+    transform: scale(1.05);
+  }
+}
+
+.font-size-vw {
+  font-size: 1vw;
 }
 </style>
