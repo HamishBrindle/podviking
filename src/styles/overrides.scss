@@ -5,3 +5,26 @@ html {
 body {
   font-size: 1vw;
 }
+
+// Change default button 
+.v-btn {
+  border-radius: 0 !important;
+  height: unset !important;
+  min-width: 0 !important;
+  padding: 0.5vw 1vw !important;
+  & > span {
+    font-size: 1vw;
+    line-height: 1vw;
+  }
+}
+
+.v-input > .v-input__control > .v-input__slot::before,
+.v-input > .v-input__control > .v-input__slot::after {
+  bottom: -0.5vw !important;
+  border-color: var(--v-black-base);
+}
+
+.v-input > .v-input__control > .v-input__slot > .v-text-field__slot > input {
+  font-size: 1vw;
+  line-height: 1vw;
+}

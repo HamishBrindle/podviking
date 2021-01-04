@@ -81,11 +81,12 @@ $borderWidth: 0.5vw;
       border-right-width: $borderWidth;
     }
   }
-  &__link-btn {
-    @include override-dimensions;
-    & > .v-btn__content {
-      font-size: 1.75vw;
-    }
+  &__link-btn > .v-btn__content {
+    font-size: 1.75vw;
+  }
+  &__link-btn.font-weight-black.v-btn.v-btn--flat.v-btn--text.v-size--default {
+    width: 100% !important;
+    height: 101% !important; // There is a fucking gap I can't fix so, 101% just needs to happen.
   }
 }
 </style>

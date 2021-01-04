@@ -44,46 +44,27 @@
           mandatory
         >
           <template slot="prev">
-            <v-icon
-              size="2vw"
-              class="font-size-vw"
-            >
+            <v-icon size="2vw">
               mdi-chevron-left
             </v-icon>
           </template>
           <template slot="next">
-            <v-icon
-              size="2vw"
-              class="font-size-vw"
-            >
+            <v-icon size="2vw">
               mdi-chevron-right
             </v-icon>
           </template>
+
+          <!-- TODO Song card component -->
           <v-slide-item
             v-for="n in 15"
             :key="n"
-            v-slot="{ active, toggle }"
+            v-slot="{ toggle }"
           >
             <v-card
               color="grey lighten-2"
               class="song"
               @click="toggle"
-            >
-              <v-row
-                class="fill-height"
-                align="center"
-                justify="center"
-              >
-                <v-scale-transition>
-                  <v-icon
-                    v-if="active"
-                    color="white"
-                    size="48"
-                    v-text="'mdi-close-circle-outline'"
-                  />
-                </v-scale-transition>
-              </v-row>
-            </v-card>
+            />
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -223,9 +204,5 @@ export default SongSlider;
   &--active {
     transform: scale(1.05);
   }
-}
-
-.font-size-vw {
-  font-size: 1vw;
 }
 </style>

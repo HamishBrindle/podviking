@@ -78,7 +78,9 @@ export default Footerbar;
 .footerbar {
   z-index: 5;
   margin-bottom: 2.5vw;
-
+  &__wrapper {
+    width: 100%;
+  }
   &__grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -108,6 +110,7 @@ export default Footerbar;
   &__site-nav {
     grid-area: site-nav;
     max-height: 9.8vw;
+    margin-bottom: 2vw;
   }
   &__typeface {
     grid-area: brand;

@@ -44,9 +44,6 @@ export default NavbarLink;
     height: 100%;
     border-radius: 0;
   }
-  &__btn > span {
-    font-size: 1vw;
-  }
   .navbar-link__btn.v-btn.v-btn--flat.v-btn--text.v-size--default {
     min-width: 100%;
     width: 100%;

@@ -19,7 +19,13 @@
     </v-main>
 
     <!-- Footer -->
-    <footerbar />
+    <v-footer
+      padless
+      width="100vw"
+      color="white"
+    >
+      <footerbar />
+    </v-footer>
 
     <!-- Fixed Soundbar -->
     <soundbar class="storefront-layout__soundbar" />

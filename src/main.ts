@@ -1,5 +1,6 @@
-import '@/registerServiceWorker';
 import 'reflect-metadata';
+import '@/registerServiceWorker';
+import '@/styles/overrides.scss';
 import { AuthService } from '@/services/AuthService';
 import AppComponent from '@/App.vue';
 import ErrorComponent from '@/views/Error.vue';
