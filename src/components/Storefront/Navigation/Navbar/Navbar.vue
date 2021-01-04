@@ -122,16 +122,21 @@ export default Navbar;
 
   width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   &__wrapper {
     padding: 1vw;
   }
 
-  &__brand-typeface {
-    max-width: 12vw;
+  &__left, &__right {
+    flex: 1;
+  }
 
+  &__center {
+    justify-self: center;
+  }
+
+  &__brand-typeface {
     & > .v-btn {
       width: auto;
       height: auto !important;
@@ -159,6 +164,7 @@ export default Navbar;
 
   &__controls {
     display: flex;
+    justify-content: flex-end;
 
     &:not(:last-child) {
       margin-right: $item-spacing;

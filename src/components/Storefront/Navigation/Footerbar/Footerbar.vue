@@ -76,6 +76,9 @@ export default Footerbar;
 @import '~vuetify/src/styles/styles.sass';
 
 .footerbar {
+  z-index: 5;
+  margin-bottom: 2.5vw;
+
   &__grid-container {
     display: grid;
     grid-template-columns: 1fr 1fr;

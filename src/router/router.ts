@@ -1,6 +1,6 @@
 import { UserService } from '@/services/UserService';
 import { Utilities } from '@/tools/Utilities';
-import Home from '@/views/Home.vue';
+import Home from '@/views/Home/Home.vue';
 import Vue from 'vue';
 import VueRouter, { Route, RouteConfig } from 'vue-router';
 import { dashboard, misc } from './routes';
@@ -14,11 +14,6 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'home',
     component: Home,
-  },
-  {
-    path: '/welcome',
-    name: 'welcome',
-    component: () => import(/* webpackChunkName: "Welcome" */ '@/views/Welcome/Welcome.vue'),
   },
   {
     path: '/shop',
