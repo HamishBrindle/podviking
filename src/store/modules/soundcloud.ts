@@ -1,5 +1,9 @@
 import { make } from 'vuex-pathify';
 
+export interface ISoundcloudState {
+  song: string;
+}
+
 const state = {
   player: null,
 };
@@ -18,10 +22,12 @@ const actions = {
 };
 
 // export store
-export default {
+export const module = {
   namespaced: true,
   state,
   getters,
   mutations,
   actions,
 };
+
+export default module;

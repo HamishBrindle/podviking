@@ -1,4 +1,3 @@
-export * from './CustomStore.interface';
 export * from './FormValidator.interface';
 export * from './FormView.interface';
 export * from './ModelView.interface';

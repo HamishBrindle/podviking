@@ -1,7 +1,7 @@
 <template>
   <v-app
     id="podviking-dashboard"
-    :style="{ background: $vuetify.theme.themes[theme].background }"
+    :style="{ background: $vuetify.theme.themes[themeMode].background }"
   >
     <!-- Overlay / Loading screen -->
     <v-overlay
@@ -40,8 +40,11 @@ export default class App extends Vue {
   @Get('context/overlay@visible')
   isOverlayVisible!: boolean;
 
-  @Get('context/theme@dark')
+  @Get('context/ui@dark')
   isDarkTheme!: boolean;
+
+  @Get('context/ui@themes')
+  themes!: any;
 
   @Sync('layout/totalHeight')
   totalHeight!: number;
@@ -62,7 +65,7 @@ export default class App extends Vue {
     return `${which}-layout`;
   }
 
-  get theme() {
+  get themeMode() {
     return (this.isDarkTheme) ? 'dark' : 'light';
   }
 

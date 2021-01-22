@@ -1,3 +1,15 @@
-export { default as context } from './context';
-export { default as layout } from './layout';
-export { default as soundcloud } from './soundcloud';
+import { module as contextModule, IContextState } from './context';
+import { module as layoutModule, ILayoutState } from './layout';
+import { module as soundcloudModule, ISoundcloudState } from './soundcloud';
+
+export interface IAppState {
+  context: IContextState,
+  layout: ILayoutState,
+  soundcloud: ISoundcloudState,
+}
+
+export {
+  contextModule,
+  layoutModule,
+  soundcloudModule,
+};

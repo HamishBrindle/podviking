@@ -120,6 +120,10 @@ export default SongSlider;
   justify-content: center;
   z-index: 0;
 
+  &__header {
+    margin-bottom: 2vw;
+  }
+
   &__header-title {
     font-size: 2vw;
     line-height: 2vw;
@@ -173,7 +177,7 @@ export default SongSlider;
     transform: translateY(25%);
 
     & > * {
-      width: 100%;
+      width: 110%;
       height: 50%;
       transform-origin: right bottom;
       -webkit-box-shadow: 5px 5px 10px -1px rgba(0,0,0,0.2);

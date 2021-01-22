@@ -35,13 +35,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import podvikingLogoUrl from '@/assets/images/svg/podviking_typeface_flat.svg';
-import PaypalLogo from '@/assets/images/svg/prvdr_paypal.svg?inline';
-import ShopifyLogo from '@/assets/images/svg/prvdr_shopify.svg?inline';
-import MastercardLogo from '@/assets/images/svg/prvdr_mastercard.svg?inline';
-import VisaLogo from '@/assets/images/svg/prvdr_visa.svg?inline';
+import podvikingLogoUrl from '@/assets/img/svg/podviking_typeface_flat.svg';
+import PaypalLogo from '@/assets/img/svg/prvdr_paypal.svg?inline';
+import ShopifyLogo from '@/assets/img/svg/prvdr_shopify.svg?inline';
+import MastercardLogo from '@/assets/img/svg/prvdr_mastercard.svg?inline';
+import VisaLogo from '@/assets/img/svg/prvdr_visa.svg?inline';
 import BigNav from '@/components/Storefront/Navigation/Footerbar/components/BigNav.vue';
-import NewsletterForm from '@/components/Storefront/Navigation/Footerbar/components/NewsletterForm.vue';
+import NewsletterForm from '@/components/Storefront/NewsletterForm.vue';
 import SiteNav from '@/components/Storefront/Navigation/Footerbar/components/SiteNav.vue';
 
 @Component({

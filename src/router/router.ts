@@ -1,8 +1,11 @@
 import { UserService } from '@/services/UserService';
+import store from '@/store';
+// import store from '@/store';
 import { Utilities } from '@/tools/Utilities';
 import Home from '@/views/Home/Home.vue';
 import Vue from 'vue';
 import VueRouter, { Route, RouteConfig } from 'vue-router';
+// import { call } from 'vuex-pathify';
 import { dashboard, misc } from './routes';
 
 Vue.use(VueRouter);
@@ -14,6 +17,9 @@ const routes: Array<RouteConfig> = [
     path: '/',
     name: 'home',
     component: Home,
+    meta: {
+      theme: { primary: '#456EF5' },
+    },
   },
   {
     path: '/shop',
@@ -24,6 +30,9 @@ const routes: Array<RouteConfig> = [
     path: '/about',
     name: 'about',
     component: () => import(/* webpackChunkName: "About" */ '@/views/About/About.vue'),
+    meta: {
+      theme: { primary: '#F7824D' },
+    },
   },
   {
     path: '/contact',
@@ -81,6 +90,9 @@ router.beforeEach((to, from, next) => {
       return next(route);
     }
   }
+
+  console.log('transitioning', store.state.context.ui.transitioning);
+  store.dispatch('context/setTransitioning', true);
 
   return next();
 });

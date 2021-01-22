@@ -7,14 +7,22 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+/* eslint-disable class-methods-use-this */
+
+import { Component } from 'vue-property-decorator';
+import { Page } from '@/lib/Page';
+import { PartialVuetifyThemes } from '@/plugins/vuetify';
 
 @Component({
   name: 'About',
   components: {},
 })
-export default class About extends Vue {
-
+export default class About extends Page {
+  public themes: PartialVuetifyThemes = {
+    light: {
+      primary: '#238748',
+    },
+  }
 }
 </script>
 

@@ -30,7 +30,7 @@ import {
 } from 'vue-property-decorator';
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore - TODO: Write proper declaration file for SVG
-import PodVikingLogo from '@/assets/images/svg/podviking_logo_flat.svg?inline';
+import PodVikingLogo from '@/assets/img/svg/podviking_logo_flat.svg?inline';
 import UserIcon from './User/UserIcon.vue';
 
 @Component({

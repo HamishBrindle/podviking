@@ -47,7 +47,7 @@ import { Sync } from 'vuex-pathify';
   name: 'Settings',
 })
 export default class Settings extends Vue {
-  @Sync('context/theme@dark')
+  @Sync('context/ui@dark')
   isDarkTheme!: boolean;
 }
 </script>

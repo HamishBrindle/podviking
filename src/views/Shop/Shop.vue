@@ -2,6 +2,23 @@
   <div class="shop__wrapper">
     <div class="shop">
       <router-view />
+      <div class="something">
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+        p <br>
+      </div>
     </div>
   </div>
 </template>

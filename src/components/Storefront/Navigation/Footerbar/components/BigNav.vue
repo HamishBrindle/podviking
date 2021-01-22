@@ -5,19 +5,14 @@
       :key="page.label"
       class="big-nav__link"
     >
-      <router-link
-        v-slot="{ href }"
-        :to="page.to"
+      <v-btn
+        class="big-nav__link-btn font-weight-black"
+        color="black"
+        text
+        @click.once="goTo(page.to)"
       >
-        <v-btn
-          :href="href"
-          class="big-nav__link-btn font-weight-black"
-          color="black"
-          text
-        >
-          {{ page.label }}
-        </v-btn>
-      </router-link>
+        {{ page.label }}
+      </v-btn>
     </div>
   </div>
 </template>
@@ -25,6 +20,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import links from '@/components/Storefront/Navigation/storefront-links';
+import { RawLocation } from 'vue-router';
 
 @Component({
   name: 'BigNav',
@@ -43,6 +39,10 @@ export class BigNav extends Vue {
       if (!link.to?.name) throw Error('Route needs a `name` - please define in router');
       return link.to?.name !== this.$route.name;
     });
+  }
+
+  async goTo(to: RawLocation) {
+    await this.$router.push(to);
   }
 }
 

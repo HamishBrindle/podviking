@@ -81,7 +81,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import brandTypefaceUrl from '@/assets/images/svg/podviking_typeface_flat.svg';
+import brandTypefaceUrl from '@/assets/img/svg/podviking_typeface_flat.svg';
 import links, { NavigationLink } from '@/components/Storefront/Navigation/storefront-links';
 import { NavbarLink } from './components/NavbarLink.vue';
 

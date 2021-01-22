@@ -1,6 +1,6 @@
 import { make } from 'vuex-pathify';
 
-interface ILayoutState {
+export interface ILayoutState {
   totalHeight: number | string;
   appBarHeight: number | string;
   reportHeight: number | string;
@@ -16,10 +16,12 @@ const mutations = make.mutations(state);
 const getters = make.getters(state);
 const actions = make.actions(state);
 
-export default {
+export const module = {
   namespaced: true,
   state,
   mutations,
   getters,
   actions,
 };
+
+export default module;

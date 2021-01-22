@@ -1,10 +1,10 @@
 import 'reflect-metadata';
 import '@/registerServiceWorker';
-import '@/styles/overrides.scss';
+import '@/styles/main.scss';
 import { AuthService } from '@/services/AuthService';
 import AppComponent from '@/App.vue';
 import ErrorComponent from '@/views/Error.vue';
-import CustomVuex from '@/store';
+import store from '@/store';
 import router from '@/router';
 import Vue, { Component } from 'vue';
 import vuetify from '@/plugins/vuetify';
@@ -17,12 +17,9 @@ const authService = AuthService.getInstance();
 
 async function start() {
   let entryComponent: Component = AppComponent;
-  let store;
 
   try {
-    Vue.use(CustomVuex);
     Vue.prototype.$ability = authService.defineAbility();
-    store = await CustomVuex.init();
   } catch (error) {
     logger.error(error);
     entryComponent = ErrorComponent;

@@ -58,7 +58,7 @@
 import NavigationItems from '@/components/NavigationDrawer/NavigationItems.vue';
 import NavigationItem from '@/components/NavigationDrawer/NavigationItem.vue';
 import links from '@/components/NavigationDrawer/links';
-import vchTypeface from '@/assets/images/svg/podviking_typeface_flat.svg';
+import vchTypeface from '@/assets/img/svg/podviking_typeface_flat.svg';
 
 export default {
   name: 'NavigationDrawer',
