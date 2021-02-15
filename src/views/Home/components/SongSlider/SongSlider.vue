@@ -60,11 +60,13 @@
             :key="n"
             v-slot="{ toggle }"
           >
-            <v-card
-              color="grey lighten-2"
-              class="song"
-              @click="toggle"
-            />
+            <song-slide>
+              <v-card
+                color="grey lighten-2"
+                class="song"
+                @click="toggle"
+              />
+            </song-slide>
           </v-slide-item>
         </v-slide-group>
       </div>
@@ -92,10 +94,13 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { SongSlide } from './SongSlide.vue';
 
 @Component({
   name: 'SongSlider',
-  components: {},
+  components: {
+    SongSlide,
+  },
 })
 export class SongSlider extends Vue {
   private readonly filters = [
@@ -201,12 +206,5 @@ export default SongSlider;
 .song {
   height: 20vw;
   width: 15vw;
-  margin: 1vw;
-  transform: scale(1);
-  transition: transform 150ms ease-out !important;
-
-  &--active {
-    transform: scale(1.05);
-  }
 }
 </style>
