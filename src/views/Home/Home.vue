@@ -112,11 +112,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Component, Prop } from 'vue-property-decorator';
 import podVikingLogoUrl from '@/assets/img/svg/podviking_logo_flat.svg';
 import podcastIconUrl from '@/assets/img/svg/icon_podcast.svg';
 import videocastIconUrl from '@/assets/img/svg/icon_videocast.svg';
 import { NewsletterForm } from '@/components/Storefront/NewsletterForm.vue';
+import { Page } from '@/lib/Page';
+import { VuetifyThemeVariant } from 'vuetify/types/services/theme.d';
 import { SongSlider } from './components/SongSlider/SongSlider.vue';
 
 @Component({
@@ -126,13 +128,19 @@ import { SongSlider } from './components/SongSlider/SongSlider.vue';
     NewsletterForm,
   },
 })
-export class Home extends Vue {
+export class Home extends Page {
   @Prop({ required: false, default: podVikingLogoUrl })
   protected readonly logoUrl!: string;
 
   protected readonly podcastIconUrl = podcastIconUrl;
 
   protected readonly videocastIconUrl = videocastIconUrl;
+
+  protected theme: Partial<VuetifyThemeVariant> = {};
+
+  public mounted() {
+    this.init();
+  }
 }
 
 export default Home;

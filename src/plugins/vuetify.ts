@@ -10,56 +10,43 @@ export type PartialVuetifyThemes = {
   dark?: Partial<VuetifyThemeVariant>
 }
 
-export const options = {
+/**
+ * Themeing alias'
+ */
+export const palette = {
+  ultramarineBlue: '#456EF5',
+  springGreen: '#00FF66',
+  bittersweet: '#FF6666',
+  white: '#FFFFFF',
+  quickSilver: '#A3A3A3',
+  jet: '#333333',
+};
+
+/**
+ * Starting theme values
+ */
+export const rootTheme = {
+  primary: palette.ultramarineBlue,
+  secondary: palette.springGreen,
+  accent: palette.bittersweet,
+  white: palette.white,
+  grey: palette.quickSilver,
+  black: palette.jet,
+  background: palette.white,
+  error: '#FF5252',
+  info: '#2196F3',
+  success: '#4CAF50',
+  warning: '#FFC107',
+};
+
+const options = {
   theme: {
     options: { customProperties: true },
     themes: {
-      light: {
-        primary: '#456EF5',
-        secondary: '#00FF66',
-        accent: '#FF6666',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107',
-        white: '#FFFFFF',
-        grey: '#A3A3A3',
-        black: '#333333',
-      },
-      dark: {
-        primary: '#456EF5',
-        secondary: '#00FF66',
-        accent: '#FF6666',
-        error: '#FF5252',
-        info: '#2196F3',
-        success: '#4CAF50',
-        warning: '#FFC107',
-        white: '#FFFFFF',
-        grey: '#A3A3A3',
-        black: '#222222',
-      },
+      light: rootTheme,
+      dark: rootTheme,
     },
   },
 };
-
-// Vue.use({
-//   install(_Vue) {
-//     _Vue.mixin({
-//       mounted() {
-//         const that = (this as any);
-//         const themes = that.$themes;
-
-//         console.log('themes :>> ', themes);
-
-//         if (themes) {
-//           Object.keys(themes.light).forEach((color) => {
-//             if (!that.$vuetify.theme.themes.light[color]) return;
-//             that.$vuetify.theme.themes.light[color] = themes.light[color];
-//           });
-//         }
-//       },
-//     });
-//   },
-// });
 
 export default new Vuetify(options);

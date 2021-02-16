@@ -37,7 +37,7 @@ import StorefrontLayout from '@/layouts/StorefrontLayout.vue';
   },
 })
 export default class App extends Vue {
-  @Get('context/overlay@visible')
+  @Get('context/ui@overlayVisible')
   isOverlayVisible!: boolean;
 
   @Get('context/ui@dark')

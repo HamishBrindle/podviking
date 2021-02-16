@@ -1,8 +1,9 @@
 import { make } from 'vuex-pathify';
 import { VuetifyThemeVariant } from 'vuetify/types/services/theme.d';
-import Vuetify from '@/plugins/vuetify';
+import Vuetify, { rootTheme } from '@/plugins/vuetify';
 import { ActionContext } from 'vuex';
 import { merge } from 'lodash';
+import variables from '@/styles/variables.scss';
 
 export interface IContextState {
   /**
@@ -14,68 +15,72 @@ export interface IContextState {
      */
     dark: boolean;
     /**
-     * Vuetify themes object (colors, etc.)
-     */
-    theme: VuetifyThemeVariant;
-    /**
-     * Whether the UI is currently transitioning or not
-     */
-    transitioning: boolean;
-  }
-
-  /**
-   * Overlay and page-loading indicator
-   */
-  overlay: {
-    /**
      * Overlay is visible
      */
-    visible: boolean;
+    overlayVisible: boolean;
   };
+
+  transition: {
+    /**
+     * Default transition time between pages
+     */
+    transitionTime?: number,
+    /**
+     * Currently transitioning
+     */
+    isTransitioning: boolean,
+    /**
+     * Starting transition color
+     */
+    fromColor?: string,
+    /**
+     * Ending transition color
+     */
+    toColor?: string,
+  },
 }
 
 const state: IContextState = {
   ui: {
     dark: false,
-    theme: Vuetify.framework.theme.themes.light,
-    transitioning: false,
+    overlayVisible: false,
   },
-  overlay: {
-    visible: false,
+  transition: {
+    transitionTime: parseInt(variables.transitionTime.replace('ms', ''), 10),
+    isTransitioning: false,
+    fromColor: 'transparent',
+    toColor: 'transparent',
   },
 };
 
 const mutations = {
   ...make.mutations(state),
-  SET_THEME: (contextState: IContextState, payload: IContextState['ui']['theme']) => {
-    const { ui } = contextState;
+  SET_THEME: (contextState: IContextState, payload: Partial<VuetifyThemeVariant>) => {
+    const theme: Partial<VuetifyThemeVariant> = {};
+    const newTheme = merge(theme, rootTheme, payload);
     Object.keys(payload).forEach((color) => {
-      ui.theme[color] = payload[color];
+      newTheme[color] = payload[color];
     });
-    Vuetify.framework.theme.themes.light = ui.theme;
+    Vuetify.framework.theme.themes.light = newTheme as VuetifyThemeVariant;
   },
-  SET_TRANSITIONING: (contextState: IContextState, payload: IContextState['ui']['transitioning']) => {
-    const { ui } = contextState;
-    ui.transitioning = payload;
+  SET_TRANSITION: (contextState: IContextState, payload: IContextState['transition']) => {
+    const { transition } = contextState;
+    const mergedTransition = merge(transition, payload);
+    transition.fromColor = mergedTransition.fromColor;
+    transition.toColor = mergedTransition.toColor;
+    transition.isTransitioning = mergedTransition.isTransitioning;
   },
 };
 
 const getters = {
   ...make.getters(state),
-  theme: (contextState: IContextState) => contextState.ui.theme,
+  theme: () => Vuetify.framework.theme.themes.light,
 };
 
 const actions = {
   ...make.actions(state),
-  setTheme: (context: ActionContext<IContextState, any>, payload: IContextState['ui']['theme']) => {
-    const theme = merge(context.state.ui.theme, payload);
-    context.commit('SET_THEME', theme);
-  },
-  setTransitioning: (context: ActionContext<IContextState, any>) => {
-    context.commit('SET_TRANSITIONING', true);
-    setTimeout(() => {
-      context.commit('SET_TRANSITIONING', false);
-    }, 1000);
+  setTheme: (context: ActionContext<IContextState, any>, payload: Partial<VuetifyThemeVariant>) => {
+    context.commit('SET_THEME', payload);
   },
 };
 

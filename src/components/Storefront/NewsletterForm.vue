@@ -9,7 +9,7 @@
         'newsletter-form__label--large': labelSize === 'large',
       }"
     >
-      <span class="text-uppercase font-weight-black">
+      <span class="text-uppercase font-weight-black black--text">
         Join our <br> quest.
       </span>
     </div>
@@ -23,6 +23,7 @@
           <v-btn
             text
             class="newsletter-form__submit mb-2 text-lowercase"
+            color="black"
           >
             Submit
           </v-btn>
@@ -62,7 +63,7 @@ $borderWidth: 0.5vw;
     border-bottom: none;
     border-left: none;
     border-right: none;
-    border-color: inherit;
+    border-color: var(--v-black-base) !important;
   }
 
   &__label--small > span {
@@ -81,6 +82,15 @@ $borderWidth: 0.5vw;
 
   &__label--right {
     text-align: right;
+  }
+
+  &__field > .v-input__control > .v-input__slot > .v-text-field__slot > input {
+    color: var(--v-black-base);
+
+    &::placeholder {
+      color: var(--v-black-base);
+      opacity: 0.5;
+    }
   }
 }
 </style>

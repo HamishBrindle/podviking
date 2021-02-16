@@ -91,8 +91,12 @@ router.beforeEach((to, from, next) => {
     }
   }
 
-  console.log('transitioning', store.state.context.ui.transitioning);
-  store.dispatch('context/setTransitioning', true);
+  // We're potentially navigating pages - start the page transition effect
+  store.dispatch('context/setTransition', {
+    isTransitioning: true,
+    fromColor: '#00FF00',
+    toColor: '#0000FF',
+  });
 
   return next();
 });

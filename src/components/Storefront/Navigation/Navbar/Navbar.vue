@@ -23,12 +23,9 @@
             <v-btn
               text
               :ripple="false"
+              @click="navigate"
             >
-              <v-img
-                :src="brandTypefaceUrl"
-                width="15vw"
-                @click="navigate"
-              />
+              <logo />
             </v-btn>
           </router-link>
         </div>
@@ -83,12 +80,14 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import brandTypefaceUrl from '@/assets/img/svg/podviking_typeface_flat.svg';
 import links, { NavigationLink } from '@/components/Storefront/Navigation/storefront-links';
+import Logo from '@/components/Logo.vue';
 import { NavbarLink } from './components/NavbarLink.vue';
 
 @Component({
   name: 'Navbar',
   components: {
     NavbarLink,
+    Logo,
   },
 })
 export class Navbar extends Vue {

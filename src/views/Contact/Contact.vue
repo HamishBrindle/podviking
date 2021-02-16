@@ -7,14 +7,27 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Page } from '@/lib/Page';
+import { palette } from '@/plugins/vuetify';
+import { Component } from 'vue-property-decorator';
+import { VuetifyThemeVariant } from 'vuetify/types/services/theme.d';
 
 @Component({
   name: 'Contact',
   components: {},
 })
-export default class Contact extends Vue {
+export default class Contact extends Page {
+  protected theme: Partial<VuetifyThemeVariant> = {
+    background: palette.white,
+    primary: palette.bittersweet,
+    secondary: palette.jet,
+    black: palette.jet,
+    white: palette.bittersweet,
+  };
 
+  public mounted(): void {
+    this.init();
+  }
 }
 </script>
 

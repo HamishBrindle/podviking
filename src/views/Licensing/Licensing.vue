@@ -7,14 +7,27 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Page } from '@/lib/Page';
+import { Component } from 'vue-property-decorator';
+import { VuetifyThemeVariant } from 'vuetify/types/services/theme.d';
+import { palette } from '@/plugins/vuetify';
 
 @Component({
   name: 'Licensing',
   components: {},
 })
-export default class Licensing extends Vue {
+export default class Licensing extends Page {
+    protected theme: Partial<VuetifyThemeVariant> = {
+      background: palette.springGreen,
+      primary: palette.jet,
+      secondary: palette.white,
+      black: palette.jet,
+      white: palette.springGreen,
+    };
 
+    public mounted(): void {
+      this.init();
+    }
 }
 </script>
 

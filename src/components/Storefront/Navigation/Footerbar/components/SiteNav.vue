@@ -5,7 +5,9 @@
       :key="section.label"
       class="site-nav__section"
     >
-      <p>{{ section.label }}</p>
+      <p class="font-weight-black black--text">
+        {{ section.label }}
+      </p>
       <router-link
         v-for="(link, idx) in section.links"
         :key="idx"

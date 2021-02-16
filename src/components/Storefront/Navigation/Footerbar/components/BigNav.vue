@@ -1,7 +1,7 @@
 <template>
   <div class="big-nav">
     <div
-      v-for="page in otherPages"
+      v-for="page in pages"
       :key="page.label"
       class="big-nav__link"
     >
@@ -18,30 +18,44 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import links from '@/components/Storefront/Navigation/storefront-links';
+import { Vue, Component, Watch } from 'vue-property-decorator';
+import links, { NavigationLink } from '@/components/Storefront/Navigation/storefront-links';
 import { RawLocation } from 'vue-router';
+import { Sync } from 'vuex-pathify';
+import { IContextState } from '@/store/modules/context';
 
 @Component({
   name: 'BigNav',
   components: {},
 })
 export class BigNav extends Vue {
-  /**
-   * Routes for the other core-pages of the site that aren't this one.
-   */
-  private get otherPages() {
-    // If we're on the homepage, the first three will suffice
-    if (this.$route.name === 'home') return links.slice(0, 3);
+  @Sync('context/transition')
+  protected transition!: IContextState['transition'];
 
-    // Otherwise get the other links that we aren't currently on
+  protected pages = links.slice(0, 3);
+
+  @Watch('transition', { immediate: true, deep: true })
+  protected watchTransition(transition: IContextState['transition']) {
+    if (transition.isTransitioning) {
+      setTimeout(() => { this.pages = this.getPages(); }, transition.transitionTime);
+    }
+  }
+
+  /**
+   * Get an array of navigation links based off what page we're currently on
+   */
+  protected getPages(): NavigationLink[] {
+    if (this.$route.name === 'home') {
+      return links.slice(0, 3);
+    }
+
     return links.filter((link) => {
       if (!link.to?.name) throw Error('Route needs a `name` - please define in router');
       return link.to?.name !== this.$route.name;
     });
   }
 
-  async goTo(to: RawLocation) {
+  protected async goTo(to: RawLocation) {
     await this.$router.push(to);
   }
 }
@@ -75,6 +89,7 @@ $borderWidth: 0.5vw;
 
   &__link {
     @include override-dimensions;
+    background: var(--v-white-base);
     &:not(:last-child) {
       border-right-color: var(--v-black-base);
       border-right-style: $borderStyle;

@@ -12,11 +12,11 @@
         <site-nav class="footerbar__site-nav" />
 
         <div class="footerbar__typeface">
-          <v-img :src="podvikingLogoUrl" />
+          <logo />
         </div>
 
         <div class="footerbar__stamp">
-          <span class="stamp__info">
+          <span class="stamp__info black--text">
             &copy; {{ year }} PodViking - All Rights Reserved
           </span>
 
@@ -34,8 +34,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
-import podvikingLogoUrl from '@/assets/img/svg/podviking_typeface_flat.svg';
+import { Vue, Component } from 'vue-property-decorator';
 import PaypalLogo from '@/assets/img/svg/prvdr_paypal.svg?inline';
 import ShopifyLogo from '@/assets/img/svg/prvdr_shopify.svg?inline';
 import MastercardLogo from '@/assets/img/svg/prvdr_mastercard.svg?inline';
@@ -43,30 +42,26 @@ import VisaLogo from '@/assets/img/svg/prvdr_visa.svg?inline';
 import BigNav from '@/components/Storefront/Navigation/Footerbar/components/BigNav.vue';
 import NewsletterForm from '@/components/Storefront/NewsletterForm.vue';
 import SiteNav from '@/components/Storefront/Navigation/Footerbar/components/SiteNav.vue';
+import Logo from '@/components/Logo.vue';
 
 @Component({
   name: 'Footerbar',
   components: {
+    BigNav,
+    Logo,
+    MastercardLogo,
+    NewsletterForm,
     PaypalLogo,
     ShopifyLogo,
-    MastercardLogo,
-    VisaLogo,
-    BigNav,
-    NewsletterForm,
     SiteNav,
+    VisaLogo,
   },
 })
 export class Footerbar extends Vue {
   /**
-   * URL for the Brand's typeface
-   */
-  @Prop({ required: false, default: podvikingLogoUrl })
-  private readonly podvikingLogoUrl!: string;
-
-  /**
    * Current year
    */
-  private year: string = new Date().getFullYear().toString();
+  protected year: string = new Date().getFullYear().toString();
 }
 
 export default Footerbar;
@@ -78,8 +73,10 @@ export default Footerbar;
 .footerbar {
   z-index: 5;
   margin-bottom: 2.5vw;
+
   &__wrapper {
     width: 100%;
+    background: var(--v-background-base);
   }
   &__grid-container {
     display: grid;
@@ -125,7 +122,11 @@ export default Footerbar;
       margin-right: 0.88vw;
     }
     .stamp__info { font-size: 1vw }
-    .stamp__providers > * { margin: 0 0.3vw }
+    .stamp__providers > * {
+      margin: 0 0.3vw;
+      // This is just some funky selector drilling - not flexible
+      & > path, & > g > path { fill: var(--v-black-base); }
+    }
   }
 }
 </style>
