@@ -25,7 +25,7 @@
               :ripple="false"
               @click="navigate"
             >
-              <logo />
+              <logo class="navbar__brand-typeface" />
             </v-btn>
           </router-link>
         </div>
@@ -118,6 +118,7 @@ export default Navbar;
 
 .navbar {
   $item-spacing: 0.25vw;
+  $logo-width: 15vw;
 
   width: 100%;
   display: flex;
@@ -137,10 +138,13 @@ export default Navbar;
 
   &__brand-typeface {
     & > .v-btn {
-      width: auto;
+      width: calc($logo-width + 1vw);
       height: auto !important;
       padding: 0.5rem !important;
       border-radius: 0;
+    }
+    & > .v-btn > span > div > svg {
+      width: $logo-width;
     }
   }
 

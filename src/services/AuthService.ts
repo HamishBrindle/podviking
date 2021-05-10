@@ -11,7 +11,7 @@ import { ModelService } from '@/services/ModelService';
 import { User } from '@/models/User';
 import ability from '@/models/functions/ability';
 
-export class AuthService extends ModelService<Auth> {
+export class AuthService extends ModelService<typeof Auth> {
   /**
    * App abilities
    */

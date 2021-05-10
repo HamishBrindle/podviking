@@ -21,7 +21,6 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
-import { Location } from 'vue-router';
 
 @Component({
   name: 'NavbarLink',
@@ -32,7 +31,7 @@ export class NavbarLink extends Vue {
   private readonly label!: string;
 
   @Prop({ required: true, default: null })
-  private readonly to!: Location;
+  private readonly to!: any;
 }
 
 export default NavbarLink;

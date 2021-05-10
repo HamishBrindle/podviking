@@ -1,22 +1,23 @@
 import { BaseModel } from '@/models/BaseModel';
-import { Query, Item } from '@vuex-orm/core';
 import {
   Create, Insert, InsertOrUpdate, UpdateObject,
 } from '@vuex-orm/core/lib/modules/payloads/Actions';
-import { Collection, Collections } from '@vuex-orm/core/lib';
+import {
+  Collection, Collections, InstanceOf, Item, Query,
+} from '@vuex-orm/core';
 import { ApiService } from './ApiService';
 
-export abstract class ModelService<T extends BaseModel> {
+export abstract class ModelService<T extends typeof BaseModel> {
   /**
    * Model that this service deals with
    */
-  protected abstract readonly model: typeof BaseModel;
+  protected abstract readonly model: T;
 
   /**
    * Model-specific path appended to the API endpoint. Must start
    * with a "/".
    */
-  protected abstract readonly path: ((args: any) => string) | string;
+  protected abstract readonly path: ((args: any) => string) | string | null;
 
   /**
    * Service for making requests to the API
@@ -29,55 +30,71 @@ export abstract class ModelService<T extends BaseModel> {
    * type
    * @param payload Args
    */
-  public abstract async create(payload: Create): Promise<Collections>;
+  public create(payload: Create): Promise<Collections> {
+    return this.model.create(payload);
+  }
 
   /**
    * Update model record(s) and return list of records updated, including
    * through associations
    * @param payload Args
    */
-  public abstract async update(payload: UpdateObject): Promise<Collections>;
+  public update(payload: UpdateObject): Promise<Collections> {
+    return this.model.update(payload);
+  }
 
   /**
    * Insert model record(s) and return list of records inserted, including
    * through associations
    * @param payload Args
    */
-  public abstract async insert(payload: Insert): Promise<Collections>;
+  public insert(payload: Insert): Promise<Collections> {
+    return this.model.insert(payload);
+  }
 
   /**
    * Insert or update model record(s) and return list of records inserted and/or
    * updated, including through associations
    * @param payload Args
    */
-  public abstract async insertOrUpdate(payload: InsertOrUpdate): Promise<Collections>;
+  public insertOrUpdate(payload: InsertOrUpdate): Promise<Collections> {
+    return this.model.insertOrUpdate(payload);
+  }
 
   /**
    * Search ORM for single record
    * @param options
    */
-  public abstract find(options: string | number | (string | number)[]): Item<T>
+  public find(options: string | number | (string | number)[]): Item<InstanceOf<T>> {
+    return this.model.find(options);
+  }
 
   /**
    * Search ORM for multiple records
    * @param options
    */
-  public abstract findIn(options: (string | number | (string | number)[])[]): Collection<T>
-
-  /**
-   * Return a query builder for searching the ORM
-   */
-  public abstract query(): Query<T>;
+  public findIn(options: (string | number | (string | number)[])[]): Collection<InstanceOf<T>> {
+    return this.model.findIn(options);
+  }
 
   /**
    * Retrieve all records from ORM
    */
-  public abstract all(): Collection<T>;
+  public all(): Collection<InstanceOf<T>> {
+    return this.model.all();
+  }
+
+  /**
+   * Return a query builder for searching the ORM
+   */
+  public query(): Query<InstanceOf<T>> {
+    return this.model.query();
+  }
 
   /**
    * Model's API wrapper
    */
-  public abstract get api(): Record<string | symbol, (...args: any[]) => Promise<any>>;
+  public abstract api: any;
 }
 
 export default ModelService;

@@ -23,7 +23,7 @@
     <!-- Footer -->
     <v-footer
       padless
-      width="100vw"
+      width="100%"
       color="white"
     >
       <footerbar />

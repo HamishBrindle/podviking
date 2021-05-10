@@ -12,7 +12,7 @@
         <site-nav class="footerbar__site-nav" />
 
         <div class="footerbar__typeface">
-          <logo />
+          <logo :style="{ 'pointer-events': 'none' }" />
         </div>
 
         <div class="footerbar__stamp">

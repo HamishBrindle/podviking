@@ -8,7 +8,7 @@ import { User } from '@/models/User';
 import { ModelService } from './ModelService';
 import { AuthService } from './AuthService';
 
-export class UserService extends ModelService<User> {
+export class UserService extends ModelService<typeof User> {
   protected model = User;
 
   protected path = '/users';

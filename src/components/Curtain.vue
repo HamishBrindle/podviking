@@ -92,7 +92,7 @@ $slideOutScale: 2;
   width: 100vw;
   height: 100vh;
   overflow: hidden !important;
-  z-index: 1;
+  z-index: 9;
   pointer-events: none;
 
   .curtain {

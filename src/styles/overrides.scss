@@ -28,3 +28,18 @@ body {
   font-size: 1vw;
   line-height: 1vw;
 }
+
+// Tooltip
+.v-tooltip {
+  &__content {
+    padding: 0.5vw 2vw !important;
+    font-size: 2vw !important;
+    height: 3vw !important;
+
+    & > * {
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

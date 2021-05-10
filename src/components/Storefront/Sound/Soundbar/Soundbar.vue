@@ -73,41 +73,41 @@ import SoundbarVolume from './components/SoundbarVolume.vue';
   },
 })
 export class Soundbar extends Vue {
-  private readonly soundcloudService = SoundcloudService.getInstance();
+  protected readonly soundcloudService = SoundcloudService.getInstance();
 
-  private readonly logger: Logger = new Logger({ context: 'Soundbar' });
+  protected readonly logger: Logger = new Logger({ context: 'Soundbar' });
 
-  private streamer: SoundcloudStreamer = Vue.observable(this.soundcloudService.getStreamer());
+  protected streamer: SoundcloudStreamer = Vue.observable(this.soundcloudService.getStreamer());
 
-  private loading = false;
+  protected loading = false;
 
   /**
    * TODO: Remove when real deal comes in
    */
-  private readonly song = {
+  protected readonly song = {
     track: '279764235',
     artist: 'Young & Shameless',
     title: 'White Ferrari (Remix)',
     img: '',
   }
 
-  private get isPlaying() {
+  protected get isPlaying() {
     return this.streamer.playing;
   }
 
-  private get currentTime() {
+  protected get currentTime() {
     return this.streamer.time;
   }
 
-  private get totalTime() {
+  protected get totalTime() {
     return this.streamer.duration;
   }
 
-  private get volume() {
+  protected get volume() {
     return this.streamer.volume;
   }
 
-  private get isMuted() {
+  protected get isMuted() {
     return this.streamer.muted;
   }
 
@@ -127,43 +127,43 @@ export class Soundbar extends Vue {
     this.loading = false;
   }
 
-  private onControlsPlay() {
+  protected onControlsPlay() {
     this.streamer.play();
   }
 
-  private onControlsPause() {
+  protected onControlsPause() {
     this.streamer.pause();
   }
 
-  private onControlsPrev() {
+  protected onControlsPrev() {
     this.logger.info(`${this.$options.name}: onControlsPrev`);
   }
 
-  private onControlsNext() {
+  protected onControlsNext() {
     this.logger.info(`${this.$options.name}: onControlsNext`);
   }
 
-  private onSliderStart() {
+  protected onSliderStart() {
     this.streamer.pause();
   }
 
-  private onSliderEnd(value: number) {
+  protected onSliderEnd(value: number) {
     this.streamer.seek(value).then(() => this.streamer.play());
   }
 
-  private onSliderMousedown(/* event: MouseEvent */) {
+  protected onSliderMousedown(/* event: MouseEvent */) {
     this.logger.info(`${this.$options.name}: onSliderMousedown`);
   }
 
-  private onSliderMouseup(/* event: MouseEvent */) {
+  protected onSliderMouseup(/* event: MouseEvent */) {
     this.logger.info(`${this.$options.name}: onSliderMouseup`);
   }
 
-  private onVolumeAdjust(volume: number) {
+  protected onVolumeAdjust(volume: number) {
     this.streamer.setVolume(volume);
   }
 
-  private onVolumeMute(isMuted: boolean) {
+  protected onVolumeMute(isMuted: boolean) {
     this.streamer.setMuted(isMuted);
   }
 }
