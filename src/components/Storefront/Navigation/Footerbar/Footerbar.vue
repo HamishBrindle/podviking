@@ -118,6 +118,7 @@ export default Footerbar;
     justify-content: flex-end;
     align-items: center;
     grid-area: stamp;
+    font-weight: 600;
     & > span {
       margin-right: 0.88vw;
     }

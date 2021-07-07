@@ -130,6 +130,7 @@ export default SiteNav;
     text-decoration: none;
     transition: color 200ms ease-in-out;
     color: var(--v-black-base);
+    font-weight: 600;
     &:hover {
       color: var(--v-black-lighten3);
     }
