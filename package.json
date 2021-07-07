@@ -21,7 +21,7 @@
     "@babel/polyfill": "^7.4.4",
     "@casl/ability": "^4.1.6",
     "@vuex-orm/core": "^0.36.3",
-    "axios": "^0.19.2",
+    "axios": ">=0.21.1",
     "core-js": "^3.6.4",
     "d3": "^5.15.1",
     "dotenv": "^8.2.0",
