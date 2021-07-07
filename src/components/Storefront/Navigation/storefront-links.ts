@@ -19,7 +19,7 @@ const links: NavigationLink[] = [
     to: { name: 'contact' },
   },
   {
-    label: 'FAQ',
+    label: 'Licensing',
     to: { name: 'licensing' },
   },
 ];
